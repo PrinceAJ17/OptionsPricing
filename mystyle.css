@@ -1,3 +1,11 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+
 body{
     display: flex;
     flex-direction: column;
@@ -5,6 +13,42 @@ body{
     background-color: #323132;
 }
 
+h1{
+    margin-top: 0px;
+    text-align: center;
+    color: white;
+}
+
+label{
+    display: block;
+    color: white;
+    font-size: 18px;
+    margin: 5px 0px 5px 0px;
+}
+
+button {
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
 
 .OptionsPricingCalc{
     display: flex;
@@ -18,7 +62,39 @@ body{
     width: 300px;
 }
 
-label{
-    display: block;
+.ResultsDisplay {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.result-card {
+    background-color: #222;
     color: white;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    width: 150px;
+}
+
+.result-card.call {
+    color: black;
+    background-color: #90ee90; 
+    margin: 0px 10px 0px 0px; 
+}
+
+.result-card.put {
+    color: black;
+    margin: 0px 0px 0px 10px; 
+    background-color: #ffcccb; 
+}
+
+.result-label {
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.result-value {
+    font-size: 1.5rem;
+    font-weight: bold;
 }
