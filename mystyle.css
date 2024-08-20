@@ -1,11 +1,11 @@
-/* Chrome, Safari, Edge, Opera */
+/* Makes the incrementant button on the input boxes disappear */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-
+/* Element styles */
 body{
     display: flex;
     flex-direction: column;
@@ -50,6 +50,7 @@ input[type="number"] {
     box-sizing: border-box;
 }
 
+/* Class styles */
 .OptionsPricingCalc{
     display: flex;
     flex-direction: column;
