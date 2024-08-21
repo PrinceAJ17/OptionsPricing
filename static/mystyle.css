@@ -1,31 +1,35 @@
-/* Makes the incrementant button on the input boxes disappear */
+/* Remove spin buttons from number input fields */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+    -webkit-appearance: none;
+    margin: 0;
 }
 
-/* Element styles */
-body{
+/* Global styles */
+body {
     display: flex;
     flex-direction: column;
     height: 100vh;
     background-color: #323132;
+    font-family: Arial, sans-serif;
 }
 
-h1{
-    margin-top: 0px;
+/* Header styles */
+h1 {
+    margin-top: 0;
     text-align: center;
     color: white;
 }
 
-label{
+/* Label styles */
+label {
     display: block;
     color: white;
     font-size: 18px;
-    margin: 5px 0px 5px 0px;
+    margin: 5px 0;
 }
 
+/* Button styles */
 button {
     padding: 10px;
     margin-top: 10px;
@@ -36,12 +40,14 @@ button {
     border-radius: 4px;
     cursor: pointer;
     font-size: 16px;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
     background-color: #0056b3;
 }
 
+/* Input field styles */
 input[type="number"] {
     width: 100%;
     padding: 8px;
@@ -49,27 +55,30 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-size: 16px;
 }
 
-/* Class styles */
-.OptionsPricingCalc{
+/* Container for the options pricing calculator */
+.OptionsPricingCalc {
     display: flex;
     flex-direction: column;
     justify-content: center;
     background-color: #190d05;
     border-radius: 9px;
-    margin: 0px;
     padding: 20px;
-    gap: 6px;
+    gap: 10px; /* Increased gap for better spacing */
     width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
 }
 
+/* Container for displaying results */
 .ResultsDisplay {
     display: flex;
-    flex-direction: row;
     justify-content: center;
+    margin-bottom: 20px; /* Added margin to separate from input fields */
 }
 
+/* Individual result card styles */
 .result-card {
     background-color: #222;
     color: white;
@@ -77,25 +86,30 @@ input[type="number"] {
     border-radius: 8px;
     text-align: center;
     width: 150px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Added shadow for better depth */
 }
 
+/* Specific styles for call option result card */
 .result-card.call {
-    color: black;
     background-color: #90ee90; 
-    margin: 0px 10px 0px 0px; 
-}
-
-.result-card.put {
     color: black;
-    margin: 0px 0px 0px 10px; 
-    background-color: #ffcccb; 
+    margin-right: 10px; 
 }
 
+/* Specific styles for put option result card */
+.result-card.put {
+    background-color: #ffcccb;
+    color: black;
+    margin-left: 10px;
+}
+
+/* Label styles inside result cards */
 .result-label {
     font-size: 1.2rem;
     margin-bottom: 5px;
 }
 
+/* Value styles inside result cards */
 .result-value {
     font-size: 1.5rem;
     font-weight: bold;

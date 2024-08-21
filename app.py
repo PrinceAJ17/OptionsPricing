@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request
 import numpy
 from scipy.stats import norm
+import math
 
 app=  Flask(__name__)
 
@@ -18,15 +19,21 @@ def put(S,X,T,r,sigma):
     P = ((X*numpy.exp(-r*T))*norm.cdf(-d2)) - (S*norm.cdf(-d1))
     return P
 
+def getFormValue(form, nameOfInput, defaultValue):
+    if (form.get(nameOfInput)):
+        return round(float(form[nameOfInput]), 2)
+    else:
+        return defaultValue
+
 
 @app.route("/", methods=["POST", "GET"])
 def index():
     if request.method == "POST":
-        S = round(float(request.form["stockPrice"]),2)
-        X = round(float(request.form["strikePrice"]),2)
-        r = round(float(request.form["RFIR"]),2)
-        T = round(float(request.form["expiration"]),2)
-        sigma = round(float(request.form["volatility"]),2)
+        S = getFormValue(request.form,"stockPrice", 150.00)
+        X = getFormValue(request.form,"strikePrice", 100.00)
+        r = getFormValue(request.form,"RFIR", 0.05)
+        T = getFormValue(request.form,"expiration", 1.00)
+        sigma = getFormValue(request.form,"volatility",0.20)
 
         call_price = call(S, X, T, r, sigma)
         put_price = put(S, X, T, r, sigma)
@@ -42,8 +49,8 @@ def index():
 
     return render_template(
         "index.html",
-        call_price=round(call_price, 2),
-        put_price=round(put_price, 2),
+        call_price=f"${round(call_price, 2):.2f}",
+        put_price=f"${round(put_price, 2):.2f}",
         stockPrice=f"{S:.2f}",
         strikePrice=f"{X:.2f}",
         RFIR=f"{r:.2f}",
