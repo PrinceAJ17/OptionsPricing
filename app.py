@@ -21,7 +21,7 @@ def put(S,X,T,r,sigma):
 
 def getFormValue(form, nameOfInput, defaultValue):
     if (form.get(nameOfInput)):
-        return round(float(form[nameOfInput]), 2)
+        return math.ceil(float(form[nameOfInput])*100) / 100
     else:
         return defaultValue
 
