@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request
 import numpy
 from scipy.stats import norm
-import math
+
 
 app=  Flask(__name__)
 
@@ -21,7 +21,7 @@ def put(S,X,T,r,sigma):
 
 def getFormValue(form, nameOfInput, defaultValue):
     if (form.get(nameOfInput)):
-        return math.ceil(float(form[nameOfInput])*100) / 100
+        return round(float(form[nameOfInput]),2)
     else:
         return defaultValue
 
