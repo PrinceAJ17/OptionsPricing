@@ -58,6 +58,10 @@ input[type="number"] {
     font-size: 16px;
 }
 
+input[type="number"]:focus{
+    outline: none;
+    box-shadow: 0 0 0 2px #90ee90; /* Full freedom. (works also with border-radius) */
+}
 /* Container for the options pricing calculator */
 .OptionsPricingCalc {
     display: flex;
