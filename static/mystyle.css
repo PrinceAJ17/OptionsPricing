@@ -60,9 +60,15 @@ input[type="number"] {
 
 input[type="number"]:focus{
     outline: none;
-    box-shadow: 0 0 0 2px #90ee90; /* Full freedom. (works also with border-radius) */
+    box-shadow: 0 0 0 2px #90ee90; 
 }
 /* Container for the options pricing calculator */
+.container{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 .OptionsPricingCalc {
     display: flex;
     flex-direction: column;
@@ -118,3 +124,38 @@ input[type="number"]:focus{
     font-size: 1.5rem;
     font-weight: bold;
 }
+
+.Heatmap{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: #f26e16;
+    border-radius: 9px;
+    padding: 20px;
+    width: 100%;
+    gap: 10px; /* Increased gap for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+}
+.HeatmapGraphs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #190d05;
+    border-radius: 9px;
+    padding: 20px;
+    gap: 10px; /* Increased gap for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+}
+
+.HeatmapParameters{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    background-color: #190d05;
+    border-radius: 9px;
+    padding: 20px;
+    gap: 10px; /* Increased gap for better spacing */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+}
+
+
