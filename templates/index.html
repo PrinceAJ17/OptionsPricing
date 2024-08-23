@@ -41,25 +41,33 @@
             </form>
         </div>
         <div class="Heatmap">
-            <div class="HeatmapParameters">
-                <div class="SPParameters">
-                    <label for="minStockPrice">Minimum Stock Price</label>
-                    <input type="number" id="minStockPrice" name="minStockPrice">
-    
-                    <label for="maxStockPrice">Maximum Stock Price</label>
-                    <input type="number" id="maxStockPrice" name="maxStockPrice">
+            <form id="heatSubmission" method="POST">
+                <div class="HeatmapParameters">
+                    <h1>Heatmap Parameters</h1>
+                    <div class="Parameters">
+                        <div class="SPParameters">
+                            <label for="minStockPrice">Minimum Stock Price</label>
+                            <input type="number" id="minStockPrice" name="minStockPrice" value="{{minStockPrice}}" step="0.01">
+            
+                            <label for="maxStockPrice">Maximum Stock Price</label>
+                            <input type="number" id="maxStockPrice" name="maxStockPrice" value="{{maxStockPrice}}" step="0.01">
+                        </div>
+                        <div class="VolatilityParameters">
+                            <label for="minVolatility">Minimum Volatility</label>
+                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="1" step="0.01" value="{{minVolatility}}">
+                            <p><span class="myNum1" style="color: aliceblue;">{{minVolatility}}</span></p>
+            
+                            <label for="maxVolatility">Maximum Volatility</label>
+                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="1" step="0.01" value="{{maxVolatility}}">
+                            <p><span class="myNum2" style="color: aliceblue;">{{maxVolatility}}</span></p>
+                        </div>
+                    </div>
+                    <button type="submit">GENERATE</button>
                 </div>
-                <div class="VolatilityParameters">
-                    <label for="minVolatility">Minimum Volatility</label>
-                    <input id="minVolatility" type="range" min="0" max="100">
-    
-                    <label for="maxVolatility">Maximum Volatility</label>
-                    <input id="maxVolatility" type="range" min="0" max="100">
+                <div class="HeatmapGraphs">
+        
                 </div>
-            </div>
-            <div class="HeatmapGraphs">
-    
-            </div>
+            </form>
         </div>
     </div>
 </body>
