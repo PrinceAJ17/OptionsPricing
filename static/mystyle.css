@@ -157,10 +157,64 @@ input[type="number"]:focus{
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
 }
 
-.Parameters{
+/* Container for parameters */
+.Parameters {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: flex-start; /* Aligns both SP and Volatility parameters to the top */
+    gap: 20px; /* Adds space between the two columns */
+}
+
+/* Stock Price Parameters (SP) styling */
+.SPParameters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Added gap for better spacing */
+    width: 50%; /* Ensure both columns take equal width */
+}
+
+/* Volatility Parameters styling */
+.VolatilityParameters {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Increased gap for better spacing */
+    width: 50%; /* Ensure both columns take equal width */
+}
+
+/* Range Input styling for better alignment */
+.VolatilityParameters input[type="range"] {
+    width: 100%;
+    margin: 10px 0; /* Ensures space around range input */
+}
+
+/* Align labels and inputs properly */
+.VolatilityParameters label{
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: white;
+}
+.SPParameters label {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: white;
+}
+
+.VolatilityParameters p,
+.SPParameters p {
+    margin: 0;
+    font-size: 14px;
+    display: flex;
+    align-self: normal;
+    justify-content: space-between;
+    color: aliceblue;
+}
+
+/* Style for min and max container */
+.minVolCont, .maxVolCont, .MinSpCont, .MaxSpCont {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Aligns labels and inputs to the left */
+    width: 100%; /* Full width to match input range and text */
 }
 
 

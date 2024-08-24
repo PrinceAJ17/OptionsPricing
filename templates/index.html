@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <div class="OptionsPricingCalc">
-            <form id="formSubmission" method="POST">
+            <form id="formSubmission" method="POST" action="/calc">
                 <h1>Black-Scholes Option Pricing Model</h1>
                 <div class="ResultsDisplay">
                     <div class="result-card call">
@@ -41,31 +41,45 @@
             </form>
         </div>
         <div class="Heatmap">
-            <form id="heatSubmission" method="POST">
+            <form id="heatSubmission" method="POST" action="/heatmap">
                 <div class="HeatmapParameters">
                     <h1>Heatmap Parameters</h1>
                     <div class="Parameters">
                         <div class="SPParameters">
-                            <label for="minStockPrice">Minimum Stock Price</label>
-                            <input type="number" id="minStockPrice" name="minStockPrice" value="{{minStockPrice}}" step="0.01">
-            
-                            <label for="maxStockPrice">Maximum Stock Price</label>
-                            <input type="number" id="maxStockPrice" name="maxStockPrice" value="{{maxStockPrice}}" step="0.01">
+                            <div class="MinSpCont">
+                                <label for="minStockPrice">Minimum Stock Price</label>
+                                <input type="number" id="minStockPrice" name="minStockPrice" value="{{minStockPrice}}" step="0.01">
+                            </div>
+                            <div class="MaxSpCont">
+                                <label for="maxStockPrice">Maximum Stock Price</label>
+                                <input type="number" id="maxStockPrice" name="maxStockPrice" value="{{maxStockPrice}}" step="0.01">
+                            </div>
                         </div>
                         <div class="VolatilityParameters">
-                            <label for="minVolatility">Minimum Volatility</label>
-                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="1" step="0.01" value="{{minVolatility}}">
-                            <p><span class="myNum1" style="color: aliceblue;">{{minVolatility}}</span></p>
-            
-                            <label for="maxVolatility">Maximum Volatility</label>
-                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="1" step="0.01" value="{{maxVolatility}}">
-                            <p><span class="myNum2" style="color: aliceblue;">{{maxVolatility}}</span></p>
-                        </div>
+                            <div class="minVolCont">
+                                <label for="minVolatility">Minimum Volatility</label>
+                                <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="{{minVolatility}}" step="0.01" value="{{minVolatility}}">
+                                <p>
+                                    <span>0.01</span>
+                                    <span class="myNum1">{{minVolatility}}</span>
+                                    <span>{{minVolatility}}</span>
+                                </p>
+                            </div>
+                            <div class="maxVolCont">
+                                <label for="maxVolatility">Maximum Volatility</label>
+                                <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="{{maxVolatility}}" step="0.01" value="{{maxVolatility}}">
+                                <p>
+                                    <span>0.01</span>
+                                    <span class="myNum2">{{maxVolatility}}</span>
+                                    <span>{{maxVolatility}}</span>
+                                </p>
+                            </div>
+                        </div>                        
                     </div>
                     <button type="submit">GENERATE</button>
                 </div>
                 <div class="HeatmapGraphs">
-        
+                    <h1>Heatmaps</h1>
                 </div>
             </form>
         </div>

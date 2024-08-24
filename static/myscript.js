@@ -35,14 +35,5 @@ maxVol.addEventListener("input", ()=>{
     num2.textContent = maxVol.value
 })
 
-minVol.addEventListener("change", () => {
-    const minValue = parseFloat(minVol.value);
-    maxVol.min = minValue; // Update the min of maxVol to be the new min
-});
-
-maxVol.addEventListener("change", () => {
-    const maxValue = parseFloat(maxVol.value);
-    minVol.max = maxValue; // Update the max of minVol to be the new max
-});
 
 
