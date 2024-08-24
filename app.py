@@ -3,7 +3,7 @@ import numpy as np
 import seaborn as sns
 from scipy.stats import norm
 import matplotlib.pyplot as plt  # Import matplotlib for plotting
-
+import plotly.express as px
 
 
 
@@ -101,9 +101,6 @@ def heatmap():
     T = getFormValue(request.form,"expiration", 1.00)
     sigma = getFormValue(request.form,"volatility",0.20)
 
-    call_price = call(S, X, T, r, sigma)
-    put_price = put(S, X, T, r, sigma)
-
     MinSP = getFormValue(request.form,"minStockPrice",S*0.8)
     MaxSP = getFormValue(request.form,"maxStockPrice",S*1.2)
 
@@ -113,21 +110,20 @@ def heatmap():
     stockRange = np.round(np.linspace(MinSP, MaxSP, 10),2)
     volRange = np.round(np.linspace(minVol, maxVol, 10),2)
 
-
     call_prices = np.zeros((len(stockRange), len(volRange)))
     put_prices = np.zeros((len(stockRange), len(volRange)))
 
     for i, vol in enumerate(volRange):
         for j, stock in enumerate(stockRange):
-            call_prices[j, i] = round(call(stock, vol),2)
-            put_prices[j, i] = round(put(stock, vol),2)
+            call_prices[i, j] = call(stock, X, T, r, vol)
+            put_prices[i, j] = put(stock, X, T, r, vol)
 
-# Create heatmap for call prices
+    # Create heatmap for call prices
     plt.figure(figsize=(10, 8))  # Set the figure size
-    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=stockRange, yticklabels=volRange)
-    plt.title('Call Prices Heatmap')
-    plt.xlabel('Stock Price')
-    plt.ylabel('Volatility')
+    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
+    plt.title("Call Prices Heatmap")
+    plt.xlabel("Stock Price")
+    plt.ylabel("Volatility")
     plt.show() 
 
 if __name__ == "__main__":
