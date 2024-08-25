@@ -33,6 +33,17 @@ def getFormValue(form, nameOfInput, defaultValue):
     else:
         return defaultValue
 
+def generateHeatMap(prices, stockrange, volrange, title, filename):
+    plt.figure(figsize=(10,8))
+    sns.heatmap(prices, cmap="Blues", annot=True, xticklabels=np.round(stockrange, 2), yticklabels=np.round(volrange, 2), fmt=".2f")
+    plt.title(title)
+    plt.xlabel("Stock Price")
+    plt.ylabel("Volatility")
+    put_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], filename)
+    plt.savefig(put_heatmap_path)
+    plt.close()
+
+
 @app.route("/", methods=["GET"])
 def index():
     # Default values
@@ -61,25 +72,8 @@ def index():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
 
-    # Create heatmap for call prices and save as imag10,8
-    plt.figure(figsize=(10,8))
-    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Call Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    call_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'call_prices_heatmap.png')
-    plt.savefig(call_heatmap_path)
-    plt.close()
-
-    # Create heatmap for put prices and save as imag10,8
-    plt.figure(figsize=(10,8))
-    sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Put Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    put_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'put_prices_heatmap.png')
-    plt.savefig(put_heatmap_path)
-    plt.close()
+    generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap", "call_prices_heatmap.png")
+    generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap", "put_prices_heatmap.png")
 
     return render_template(
         "index.html",
@@ -126,25 +120,8 @@ def calc():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
 
-    # Create heatmap for call prices and save as imag10,8
-    plt.figure(figsize=(10,8))
-    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Call Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    call_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'call_prices_heatmap.png')
-    plt.savefig(call_heatmap_path)
-    plt.close()
-
-    # Create heatmap for put prices and save as imag10,8
-    plt.figure(figsize=(10,8))
-    sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Put Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    put_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'put_prices_heatmap.png')
-    plt.savefig(put_heatmap_path)
-    plt.close()
+    generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap", "call_prices_heatmap.png")
+    generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap", "put_prices_heatmap.png")
 
     return render_template(
         "index.html",
@@ -191,25 +168,8 @@ def heatmap():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
 
-    # Create heatmap for call prices and save as imag10,8
-    plt.figure(figsize=(10,8))
-    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Call Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    call_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'call_prices_heatmap.png')
-    plt.savefig(call_heatmap_path)
-    plt.close()
-
-    # Create heatmap for put prices and save as image
-    plt.figure(figsize=(10,8))
-    sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
-    plt.title("Put Prices Heatmap")
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
-    put_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'put_prices_heatmap.png')
-    plt.savefig(put_heatmap_path)
-    plt.close()
+    generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap", "call_prices_heatmap.png")
+    generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap", "put_prices_heatmap.png")
 
     return render_template(
         "index.html",
