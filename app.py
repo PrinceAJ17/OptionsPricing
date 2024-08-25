@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, send_from_directory
 import numpy as np
 import seaborn as sns
 from scipy.stats import norm
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 
@@ -59,8 +61,8 @@ def index():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
 
-    # Create heatmap for call prices and save as image
-    plt.figure(figsize=(8, 6))
+    # Create heatmap for call prices and save as imag10,8
+    plt.figure(figsize=(10,8))
     sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
     plt.title("Call Prices Heatmap")
     plt.xlabel("Stock Price")
@@ -69,8 +71,8 @@ def index():
     plt.savefig(call_heatmap_path)
     plt.close()
 
-    # Create heatmap for put prices and save as image
-    plt.figure(figsize=(8, 6))
+    # Create heatmap for put prices and save as imag10,8
+    plt.figure(figsize=(10,8))
     sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
     plt.title("Put Prices Heatmap")
     plt.xlabel("Stock Price")
@@ -113,8 +115,41 @@ def calc():
     minVol = getFormValue(request.form, "minVolatility", sigma * 0.5)
     maxVol = getFormValue(request.form, "maxVolatility", sigma * 1.5)
 
+    stockRange = np.round(np.linspace(MinSP, MaxSP, 10), 2)
+    volRange = np.round(np.linspace(minVol, maxVol, 10), 2)
+
+    call_prices = np.zeros((len(stockRange), len(volRange)))
+    put_prices = np.zeros((len(stockRange), len(volRange)))
+
+    for i, vol in enumerate(volRange):
+        for j, stock in enumerate(stockRange):
+            call_prices[i, j] = call(stock, X, T, r, vol)
+            put_prices[i, j] = put(stock, X, T, r, vol)
+
+    # Create heatmap for call prices and save as imag10,8
+    plt.figure(figsize=(10,8))
+    sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
+    plt.title("Call Prices Heatmap")
+    plt.xlabel("Stock Price")
+    plt.ylabel("Volatility")
+    call_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'call_prices_heatmap.png')
+    plt.savefig(call_heatmap_path)
+    plt.close()
+
+    # Create heatmap for put prices and save as imag10,8
+    plt.figure(figsize=(10,8))
+    sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
+    plt.title("Put Prices Heatmap")
+    plt.xlabel("Stock Price")
+    plt.ylabel("Volatility")
+    put_heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], 'put_prices_heatmap.png')
+    plt.savefig(put_heatmap_path)
+    plt.close()
+
     return render_template(
         "index.html",
+        call_heatmap='call_prices_heatmap.png',
+        put_heatmap='put_prices_heatmap.png',
         call_price=f"${round(call_price, 2):.2f}",
         put_price=f"${round(put_price, 2):.2f}",
         stockPrice=f"{S:.2f}",
@@ -156,8 +191,8 @@ def heatmap():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
 
-    # Create heatmap for call prices and save as image
-    plt.figure(figsize=(8, 6))
+    # Create heatmap for call prices and save as imag10,8
+    plt.figure(figsize=(10,8))
     sns.heatmap(call_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
     plt.title("Call Prices Heatmap")
     plt.xlabel("Stock Price")
@@ -167,7 +202,7 @@ def heatmap():
     plt.close()
 
     # Create heatmap for put prices and save as image
-    plt.figure(figsize=(8, 6))
+    plt.figure(figsize=(10,8))
     sns.heatmap(put_prices, cmap="Blues", annot=True, xticklabels=np.round(stockRange, 2), yticklabels=np.round(volRange, 2), fmt=".2f")
     plt.title("Put Prices Heatmap")
     plt.xlabel("Stock Price")

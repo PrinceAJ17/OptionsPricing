@@ -15,12 +15,17 @@ body {
 }
 
 /* Header styles */
-h1 {
+h1,h2 {
     margin-top: 0;
     text-align: center;
     color: white;
 }
 
+
+img{
+    width: 400px;
+    height: 350px;
+}
 /* Label styles */
 label {
     display: block;
@@ -72,12 +77,13 @@ input[type="number"]:focus{
 .OptionsPricingCalc {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     background-color: #190d05;
     border-radius: 9px;
     padding: 20px;
     gap: 10px; /* Increased gap for better spacing */
     width: 300px;
+    height: fit-content;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
 }
 
@@ -144,6 +150,13 @@ input[type="number"]:focus{
     padding: 20px;
     gap: 10px; /* Increased gap for better spacing */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+}
+
+.Graphs{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 10px;
 }
 
 .HeatmapParameters{
