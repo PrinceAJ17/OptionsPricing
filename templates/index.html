@@ -79,8 +79,17 @@
                     <button type="submit">GENERATE</button>
                 </div>
             </form>
-            <div class="HeatmapGraphs" method="GET" action="/heatmap">
+            <div class="HeatmapGraphs">
                 <h1>Heatmaps</h1>
+                {% if call_heatmap %}
+                <h2>Call Prices Heatmap</h2>
+                <img src="{{ url_for('static', filename='heatmaps/' + call_heatmap) }}" alt="Call Prices Heatmap">
+                {% endif %}
+    
+                {% if put_heatmap %}
+                <h2>Put Prices Heatmap</h2>
+                <img src="{{ url_for('static', filename='heatmaps/' + put_heatmap) }}" alt="Put Prices Heatmap">
+                {% endif %}
             </div>
         </div>
     </div>
