@@ -9,17 +9,7 @@ inputs1.forEach(element => {
         element.value = value
     })
 })
-///FOR SP PARAMETER///
-const heatMap = document.getElementById("heatSubmission")
-const inputs2 = heatMap.querySelectorAll('input[type="number"]');
 
-inputs2.forEach(element => {
-    element.addEventListener("change",()=>{
-        value = parseFloat(element.value)
-        value = value.toFixed(2)
-        element.value = value
-    })
-})
 ///FOR VOLATILITY PARAMETER///
 const minVol = document.querySelector("#minVolatility")
 const num = document.querySelector(".myNum1")
