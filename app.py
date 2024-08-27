@@ -59,6 +59,18 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
 
 @app.route("/", methods=["GET"])
 def index():
+
+    S = 150.00
+    X = 100.00
+    r = 0.05
+    T = 1.00
+    sigma = 0.20
+    minSP = 120
+    maxSP = 180
+    minVol = 0.1
+    maxVol = 0.3
+    colorPalette = "RdYlGn"
+    
     call_price = call(S, X, T, r, sigma)
     put_price = put(S, X, T, r, sigma)
 
@@ -75,9 +87,9 @@ def index():
     mappedMaxVol = maxVol
 
     for i, vol in enumerate(volRange):
-        for j, stock in enumerate(stockRange):
-            call_prices[i, j] = call(stock, X, T, r, vol)
-            put_prices[i, j] = put(stock, X, T, r, vol)
+        for j, stockPrice in enumerate(stockRange):
+            call_prices[i, j] = call(stockPrice, X, T, r, vol)
+            put_prices[i, j] = put(stockPrice, X, T, r, vol)
 
     generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap",colorPalette, "call_prices_heatmap.png")
     generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap",colorPalette,"put_prices_heatmap.png")
@@ -106,11 +118,54 @@ def index():
 
 @app.route("/calc", methods=["POST"])
 def calc():
-    S = getFormValue(request.form, "stockPrice", 150.00)
-    X = getFormValue(request.form, "strikePrice", 100.00)
-    r = getFormValue(request.form, "RFIR", 0.05)
-    T = getFormValue(request.form, "expiration", 1.00)
-    sigma = getFormValue(request.form, "volatility", 0.20)
+    global S, X, r, T, sigma, call_price, put_price, maxSP, minSP, maxVol, minVol
+
+    S = getFormValue(request.form, "stockPrice", S)
+    X = getFormValue(request.form, "strikePrice", X)
+    r = getFormValue(request.form, "RFIR", r)
+    T = getFormValue(request.form, "expiration", T)
+    sigma = getFormValue(request.form, "volatility", sigma)
+
+    call_price = call(S, X, T, r, sigma)
+    put_price = put(S, X, T, r, sigma)
+
+    minSP = S * 0.8
+    maxSP =  S * 1.2
+
+    minVol = sigma * 0.5
+    maxVol =  sigma * 1.5
+
+    mappedMinSP = minSP
+    mappedMaxSP = maxSP
+
+    mappedMinVol = minVol
+    mappedMaxVol = maxVol
+
+
+    return render_template(
+        "index.html",
+        call_heatmap='call_prices_heatmap.png',
+        put_heatmap='put_prices_heatmap.png',
+        call_price=f"${round(call_price, 2):.2f}",
+        put_price=f"${round(put_price, 2):.2f}",
+        stockPrice=f"{S:.2f}",
+        strikePrice=f"{X:.2f}",
+        RFIR=f"{r:.2f}",
+        expiration=f"{T:.2f}",
+        volatility=f"{sigma:.2f}",
+        minStockPrice=f"{minSP:.2f}",
+        maxStockPrice=f"{maxSP:.2f}",
+        minVolatility=f"{minVol:.2f}",
+        maxVolatility=f"{maxVol:.2f}",
+        mappedMinVolatility=f"{mappedMinVol:.2f}",
+        mappedMaxVolatility=f"{mappedMaxVol:.2f}",
+        mappedMinStockPrice=f"{mappedMinSP:.2f}",
+        mappedMaxStockPrice=f"{mappedMaxSP:.2f}"
+    )
+
+@app.route("/generate", methods=["POST"])
+def generate():
+    global minSP, maxSP, minVol, maxVol, colorPalette
 
     call_price = call(S, X, T, r, sigma)
     put_price = put(S, X, T, r, sigma)
@@ -124,8 +179,10 @@ def calc():
     mappedMinSP = getFormValue(request.form, "mappedMinStockPrice", minSP)
     mappedMaxSP = getFormValue(request.form, "mappedMaxStockPrice", maxSP)
 
-    mappedMinVol = getFormValue(request.form, "minVolatility", minVol)
-    mappedMaxVol = getFormValue(request.form, "maxVolatility", maxVol)
+    mappedMinVol = getFormValue(request.form, "mappedMinVolatility", minVol)
+    mappedMaxVol = getFormValue(request.form, "mappedMaxVolatility", maxVol)
+
+    colorPalette = request.form.get("heatmapColors", colorPalette)
 
     stockRange = np.round(np.linspace(mappedMinSP, mappedMaxSP, 10), 2)
     volRange = np.round(np.linspace(mappedMinVol, mappedMaxVol, 10), 2)
@@ -134,14 +191,15 @@ def calc():
     put_prices = np.zeros((len(stockRange), len(volRange)))
 
     for i, vol in enumerate(volRange):
-        for j, stock in enumerate(stockRange):
-            call_prices[i, j] = call(stock, X, T, r, vol)
-            put_prices[i, j] = put(stock, X, T, r, vol)
-    
-    colorPalette = request.form.get("heatmapColors", "RdYlGn")
+        for j, stockPrice in enumerate(stockRange):
+            call_prices[i, j] = call(stockPrice, X, T, r, vol)
+            put_prices[i, j] = put(stockPrice, X, T, r, vol)
 
-    generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap", colorPalette, "call_prices_heatmap.png")
-    generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap", colorPalette, "put_prices_heatmap.png")
+    call_heatmap_filename = 'call_prices_heatmap.png'
+    put_heatmap_filename = 'put_prices_heatmap.png'
+
+    generateHeatMap(call_prices, stockRange, volRange, "Call Option Prices Heatmap", colorPalette, call_heatmap_filename)
+    generateHeatMap(put_prices, stockRange, volRange, "Put Option Prices Heatmap", colorPalette, put_heatmap_filename)
 
     return render_template(
         "index.html",
