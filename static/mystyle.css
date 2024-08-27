@@ -52,7 +52,7 @@ button:hover {
 }
 
 /* Input field styles */
-input[type="number"] {
+input[type="number"],select {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
@@ -81,7 +81,7 @@ input[type="number"]:focus{
     border-radius: 9px;
     padding: 20px;
     gap: 10px; /* Increased gap for better spacing */
-    width: 300px;
+    width: 350px;
     height: fit-content;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
 }

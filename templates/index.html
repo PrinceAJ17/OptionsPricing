@@ -67,9 +67,19 @@
                                 <span>{{maxVolatility}}</span>
                             </p>
                         </div>
-                    </div>                        
+                    </div>                       
                 </div>
-                <button type="submit">CALCULATE</button>
+                <div class="ColorParamters">
+                    <label for="heatmapColors">Select Color Palette:</label>
+                    <select id="heatmapColors" name="heatmapColors">
+                        <option value="RdYlGn">Red/Yellow/Green</option>
+                        <option value="rocket">Rocket</option>
+                        <option value="mako">Mako</option>
+                        <option value="flare">Flare</option>
+                        <option value="viridis">Viridis</option>
+                    </select>
+                </div> 
+                <button type="submit">CALCULATE & GENERATE</button>
             </form>
         </div>
         <div class="Heatmap">
