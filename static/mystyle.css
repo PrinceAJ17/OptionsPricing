@@ -10,27 +10,30 @@ body {
     display: flex;
     flex-direction: column;
     height: 100vh;
-    background-color: #323132;
-    font-family: Arial, sans-serif;
+    background-color: #1a1a2e; /* Dark background */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #eaeaea; /* Light text for contrast */
+    margin: 0;
+    padding: 20px;
 }
 
 /* Header styles */
-h1,h2 {
+h1, h2 {
     margin-top: 0;
     text-align: center;
-    color: white;
+    color: #f5f5f5; /* Off-white text */
 }
 
 img{
-    width: 400px;
+    width: 410px;
     height: 350px;
 }
 /* Label styles */
 label {
     display: block;
-    color: white;
-    font-size: 18px;
-    margin: 5px 0;
+    color: #eaeaea; /* Light text for labels */
+    font-size: 16px;
+    margin-bottom: 5px;
 }
 
 /* Button styles */
@@ -38,8 +41,8 @@ button {
     padding: 10px;
     margin-top: 10px;
     width: 100%;
-    background-color: #007bff;
-    color: white;
+    background-color: #40407a; /* Dark blue button */
+    color: #eaeaea; /* Light text on button */
     border: none;
     border-radius: 4px;
     cursor: pointer;
@@ -48,75 +51,80 @@ button {
 }
 
 button:hover {
-    background-color: #0056b3;
+    background-color: #5758bb; /* Lighter blue on hover */
 }
 
 /* Input field styles */
-input[type="number"],select {
+input[type="number"], select {
     width: 100%;
     padding: 8px;
     margin-bottom: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #333; /* Darker border */
     border-radius: 4px;
     box-sizing: border-box;
     font-size: 16px;
+    background-color: #2e2e3a; /* Darker input background */
+    color: #eaeaea; /* Light text */
 }
 
-input[type="number"]:focus{
+input[type="number"]:focus, select:focus {
     outline: none;
-    box-shadow: 0 0 0 2px #90ee90; 
+    box-shadow: 0 0 0 2px #5758bb; /* Focus ring with the hover color */
 }
+
 /* Container for the options pricing calculator */
-.container{
+.container {
     display: flex;
     flex-direction: row;
     gap: 10px;
 }
 
+/* Options Pricing Calculator Styles */
 .OptionsPricingCalc {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: #190d05;
+    background-color: #232531; /* Dark container background */
     border-radius: 9px;
     padding: 20px;
     gap: 10px; /* Increased gap for better spacing */
-    width: 350px;
+    width: 300px;
     height: fit-content;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
 }
 
 /* Container for displaying results */
 .ResultsDisplay {
     display: flex;
     justify-content: center;
-    margin-bottom: 20px; /* Added margin to separate from input fields */
+    margin-bottom: 20px;
 }
 
 /* Individual result card styles */
 .result-card {
-    background-color: #222;
-    color: white;
+    background-color: #3a3a52; /* Darker card background */
+    color: #eaeaea;
     padding: 10px;
     border-radius: 8px;
     text-align: center;
     width: 150px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Added shadow for better depth */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Darker shadow */
 }
 
 /* Specific styles for call option result card */
 .result-card.call {
-    background-color: #90ee90; 
-    color: black;
+    background-color: #4caf50; 
+    color: #ffffff; 
     margin-right: 10px; 
 }
 
 /* Specific styles for put option result card */
 .result-card.put {
-    background-color: #ffcccb;
-    color: black;
-    margin-left: 10px;
+    background-color: #f44336; 
+    color: #ffffff; 
+    margin-left: 10px; 
 }
+
 
 /* Label styles inside result cards */
 .result-label {
@@ -130,103 +138,93 @@ input[type="number"]:focus{
     font-weight: bold;
 }
 
-.Heatmap{
+/* Heatmap styles */
+.Heatmap {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    background-color: #f26e16;
+    background-color: #1a1a2e; /* Matches calculator background */
     border-radius: 9px;
-    width: 100%;
+    width: fit-content;
     gap: 10px; /* Increased gap for better spacing */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
 }
-.HeatmapGraphs{
+
+.HeatmapGraphs {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    background-color: #190d05;
+    background-color: #232531; /* Matches other dark elements */
     border-radius: 9px;
     padding: 20px;
-    gap: 10px; /* Increased gap for better spacing */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-.Graphs{
+.Graphs {
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 10px;
 }
 
-.HeatmapParameters{
+.HeatmapParameters {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #190d05;
+    background-color: #232531; /* Matches other dark elements */
     border-radius: 9px;
     padding: 20px;
-    gap: 10px; /* Increased gap for better spacing */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Added subtle shadow for better visual impact */
+    gap: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
-/* Container for parameters */
+/* Parameters Container */
 .Parameters {
     display: flex;
     justify-content: space-between;
-    align-items: flex-start; /* Aligns both SP and Volatility parameters to the top */
-    gap: 20px; /* Adds space between the two columns */
+    align-items: flex-start;
+    gap: 20px;
 }
 
-/* Stock Price Parameters (SP) styling */
-.SPParameters {
+/* Stock Price and Volatility Parameters styling */
+.SPParameters, .VolatilityParameters {
     display: flex;
     flex-direction: column;
-    gap: 20px; /* Added gap for better spacing */
-    width: 50%; /* Ensure both columns take equal width */
-}
-
-/* Volatility Parameters styling */
-.VolatilityParameters {
-    display: flex;
-    flex-direction: column;
-    gap: 20px; /* Increased gap for better spacing */
-    width: 50%; /* Ensure both columns take equal width */
+    gap: 20px;
+    width: 50%;
 }
 
 /* Range Input styling for better alignment */
 .VolatilityParameters input[type="range"] {
     width: 100%;
-    margin: 10px 0; /* Ensures space around range input */
+    margin: 10px 0;
 }
 
-/* Align labels and inputs properly */
 .VolatilityParameters label{
     margin-bottom: 5px;
     font-size: 16px;
-    color: white;
+    color: #eaeaea;
 }
 .SPParameters label {
     margin-bottom: 10px;
     font-size: 16px;
-    color: white;
+    color: #eaeaea;
 }
 
-.VolatilityParameters p,
-.SPParameters p {
+.VolatilityParameters p, .SPParameters p {
     margin: 0;
     font-size: 14px;
     display: flex;
     align-self: normal;
     justify-content: space-between;
-    color: aliceblue;
+    color: #eaeaea;
 }
 
-/* Style for min and max container */
+/* Container for min and max inputs */
 .minVolCont, .maxVolCont, .MinSpCont, .MaxSpCont {
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Aligns labels and inputs to the left */
-    width: 100%; /* Full width to match input range and text */
+    align-items: flex-start;
+    width: 100%;
 }
-
 

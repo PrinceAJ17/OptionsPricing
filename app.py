@@ -141,7 +141,6 @@ def calc():
     mappedMinVol = minVol
     mappedMaxVol = maxVol
 
-
     return render_template(
         "index.html",
         call_heatmap='call_prices_heatmap.png',
@@ -160,7 +159,8 @@ def calc():
         mappedMinVolatility=f"{mappedMinVol:.2f}",
         mappedMaxVolatility=f"{mappedMaxVol:.2f}",
         mappedMinStockPrice=f"{mappedMinSP:.2f}",
-        mappedMaxStockPrice=f"{mappedMaxSP:.2f}"
+        mappedMaxStockPrice=f"{mappedMaxSP:.2f}",
+        heatmapColors=f"{colorPalette}"
     )
 
 @app.route("/generate", methods=["POST"])
