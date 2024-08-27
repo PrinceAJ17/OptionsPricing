@@ -15,6 +15,19 @@ app.config['HEATMAP_FOLDER'] = 'static/heatmaps'
 # Ensure the directory exists
 os.makedirs(app.config['HEATMAP_FOLDER'], exist_ok=True)
 
+
+# Default values
+S = 150.00
+X = 100.00
+r = 0.05
+T = 1.00
+sigma = 0.20
+minSP = 120
+maxSP = 180
+minVol = 0.1
+maxVol = 0.3
+colorPalette = "RdYlGn"
+
 def call(S, X, T, r, sigma):
     d1 = (np.log(S/X)+(r+((sigma)**2)/2)*T)/(sigma*np.sqrt(T))
     d2 = d1 - (sigma*np.sqrt(T))
@@ -46,33 +59,22 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
 
 @app.route("/", methods=["GET"])
 def index():
-    # Default values
-    S = 150.00
-    X = 100.00
-    r = 0.05
-    T = 1.00
-    sigma = 0.20
-
     call_price = call(S, X, T, r, sigma)
     put_price = put(S, X, T, r, sigma)
 
-    MinSP = S * 0.8
-    MaxSP = S * 1.2
-    minVol = sigma * 0.5
-    maxVol = sigma * 1.5
-
-    stockRange = np.round(np.linspace(MinSP, MaxSP, 10), 2)
+    stockRange = np.round(np.linspace(minSP, maxSP, 10), 2)
     volRange = np.round(np.linspace(minVol, maxVol, 10), 2)
 
     call_prices = np.zeros((len(stockRange), len(volRange)))
     put_prices = np.zeros((len(stockRange), len(volRange)))
 
+    mappedMinVol = minVol
+    mappedMaxVol = maxVol
+
     for i, vol in enumerate(volRange):
         for j, stock in enumerate(stockRange):
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
-
-    colorPalette = "RdYlGn"
 
     generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap",colorPalette, "call_prices_heatmap.png")
     generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap",colorPalette,"put_prices_heatmap.png")
@@ -88,11 +90,13 @@ def index():
         RFIR=f"{r:.2f}",
         expiration=f"{T:.2f}",
         volatility=f"{sigma:.2f}",
-        minStockPrice=f"{MinSP:.2f}",
-        maxStockPrice=f"{MaxSP:.2f}",
+        minStockPrice=f"{minSP:.2f}",
+        maxStockPrice=f"{maxSP:.2f}",
         minVolatility=f"{minVol:.2f}",
         maxVolatility=f"{maxVol:.2f}",
-        heatmapColors=colorPalette
+        mappedMinVolatility=f"{mappedMinVol:.2f}",
+        mappedMaxVolatility=f"{mappedMaxVol:.2f}",
+        heatmapColors=f"{colorPalette}"
     )
 
 @app.route("/calc", methods=["POST"])
@@ -106,14 +110,20 @@ def calc():
     call_price = call(S, X, T, r, sigma)
     put_price = put(S, X, T, r, sigma)
 
-    MinSP = getFormValue(request.form, "minStockPrice", S * 0.8)
-    MaxSP = getFormValue(request.form, "maxStockPrice", S * 1.2)
+    minSP = S * 0.8
+    maxSP =  S * 1.2
 
-    minVol = getFormValue(request.form, "minVolatility", sigma * 0.5)
-    maxVol = getFormValue(request.form, "maxVolatility", sigma * 1.5)
+    minVol = sigma * 0.5
+    maxVol =  sigma * 1.5
 
-    stockRange = np.round(np.linspace(MinSP, MaxSP, 10), 2)
-    volRange = np.round(np.linspace(minVol, maxVol, 10), 2)
+    mappedMinSP = getFormValue(request.form, "minStockPrice", minSP)
+    mappedMaxSP = getFormValue(request.form, "maxStockPrice", maxSP)
+
+    mappedMinVol = getFormValue(request.form, "minVolatility", minVol)
+    mappedMaxVol = getFormValue(request.form, "maxVolatility", maxVol)
+
+    stockRange = np.round(np.linspace(mappedMinSP, mappedMaxSP, 10), 2)
+    volRange = np.round(np.linspace(mappedMinVol, mappedMaxVol, 10), 2)
 
     call_prices = np.zeros((len(stockRange), len(volRange)))
     put_prices = np.zeros((len(stockRange), len(volRange)))
@@ -123,10 +133,7 @@ def calc():
             call_prices[i, j] = call(stock, X, T, r, vol)
             put_prices[i, j] = put(stock, X, T, r, vol)
     
-    if(request.form.get("heatmapColors")):
-        colorPalette = request.form["heatmapColors"]
-    else:
-        colorPalette = "RdYlGn"
+    colorPalette = request.form.get("heatmapColors", "RdYlGn")
 
     generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap", colorPalette, "call_prices_heatmap.png")
     generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap", colorPalette, "put_prices_heatmap.png")
@@ -142,11 +149,13 @@ def calc():
         RFIR=f"{r:.2f}",
         expiration=f"{T:.2f}",
         volatility=f"{sigma:.2f}",
-        minStockPrice=f"{MinSP:.2f}",
-        maxStockPrice=f"{MaxSP:.2f}",
+        minStockPrice=f"{minSP:.2f}",
+        maxStockPrice=f"{maxSP:.2f}",
         minVolatility=f"{minVol:.2f}",
         maxVolatility=f"{maxVol:.2f}",
-        heatmapColors=colorPalette
+        mappedMinVolatility=f"{mappedMinVol:.2f}",
+        mappedMaxVolatility=f"{mappedMaxVol:.2f}",
+        heatmapColors=f"{colorPalette}"
     )
 
 

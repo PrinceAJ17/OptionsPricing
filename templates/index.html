@@ -51,19 +51,19 @@
                     <div class="VolatilityParameters">
                         <div class="minVolCont">
                             <label for="minVolatility">Minimum Volatility</label>
-                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="{{minVolatility}}" step="0.01" value="{{minVolatility}}">
+                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="{{minVolatility}}" step="0.01" value="{{mappedMinVolatility}}">
                             <p>
                                 <span>0.01</span>
-                                <span class="myNum1">{{minVolatility}}</span>
+                                <span class="myNum1">{{mappedMinVolatility}}</span>
                                 <span>{{minVolatility}}</span>
                             </p>
                         </div>
                         <div class="maxVolCont">
                             <label for="maxVolatility">Maximum Volatility</label>
-                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="{{maxVolatility}}" step="0.01" value="{{maxVolatility}}">
+                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="{{maxVolatility}}" step="0.01" value="{{mappedMaxVolatility}}">
                             <p>
-                                <span>0.01</span>
-                                <span class="myNum2">{{maxVolatility}}</span>
+                                <span>{{minVolatility}}</span>
+                                <span class="myNum2">{{mappedMaxVolatility}}</span>
                                 <span>{{maxVolatility}}</span>
                             </p>
                         </div>
