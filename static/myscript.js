@@ -1,5 +1,15 @@
-///FOR OPTIONS CALCULATOR///
-const calcOptions = document.getElementById('formSubmission');
+///COLOR PARAMETER///
+document.addEventListener("DOMContentLoaded",()=>{
+    const colors = document.getElementById("heatmapColors")
+    const selected = colors.getAttribute("data-selected")
+    if(selected){
+        colors.value = selected;
+    }
+})
+
+
+///INPUT TYPE PARAMETER///
+const calcOptions = document.getElementById("formSubmission");
 const inputs1 = calcOptions.querySelectorAll('input[type="number"]');
 
 inputs1.forEach(element => {
@@ -10,7 +20,7 @@ inputs1.forEach(element => {
     })
 })
 
-///FOR VOLATILITY PARAMETER///
+/// VOLATILITY PARAMETER///
 const minVol = document.querySelector("#minVolatility")
 const num = document.querySelector(".myNum1")
 

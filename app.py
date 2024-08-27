@@ -92,7 +92,7 @@ def index():
         maxStockPrice=f"{MaxSP:.2f}",
         minVolatility=f"{minVol:.2f}",
         maxVolatility=f"{maxVol:.2f}",
-        heatmapColors=f"{colorPalette}"
+        heatmapColors=colorPalette
     )
 
 @app.route("/calc", methods=["POST"])
@@ -146,7 +146,7 @@ def calc():
         maxStockPrice=f"{MaxSP:.2f}",
         minVolatility=f"{minVol:.2f}",
         maxVolatility=f"{maxVol:.2f}",
-        heatmapColors=f"{colorPalette}"
+        heatmapColors=colorPalette
     )
 
 
