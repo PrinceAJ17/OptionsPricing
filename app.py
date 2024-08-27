@@ -68,6 +68,9 @@ def index():
     call_prices = np.zeros((len(stockRange), len(volRange)))
     put_prices = np.zeros((len(stockRange), len(volRange)))
 
+    mappedMinSP = minSP
+    mappedMaxSP = maxSP
+
     mappedMinVol = minVol
     mappedMaxVol = maxVol
 
@@ -96,6 +99,8 @@ def index():
         maxVolatility=f"{maxVol:.2f}",
         mappedMinVolatility=f"{mappedMinVol:.2f}",
         mappedMaxVolatility=f"{mappedMaxVol:.2f}",
+        mappedMinStockPrice=f"{mappedMinSP:.2f}",
+        mappedMaxStockPrice=f"{mappedMaxSP:.2f}",
         heatmapColors=f"{colorPalette}"
     )
 
@@ -116,8 +121,8 @@ def calc():
     minVol = sigma * 0.5
     maxVol =  sigma * 1.5
 
-    mappedMinSP = getFormValue(request.form, "minStockPrice", minSP)
-    mappedMaxSP = getFormValue(request.form, "maxStockPrice", maxSP)
+    mappedMinSP = getFormValue(request.form, "mappedMinStockPrice", minSP)
+    mappedMaxSP = getFormValue(request.form, "mappedMaxStockPrice", maxSP)
 
     mappedMinVol = getFormValue(request.form, "minVolatility", minVol)
     mappedMaxVol = getFormValue(request.form, "maxVolatility", maxVol)
@@ -155,6 +160,8 @@ def calc():
         maxVolatility=f"{maxVol:.2f}",
         mappedMinVolatility=f"{mappedMinVol:.2f}",
         mappedMaxVolatility=f"{mappedMaxVol:.2f}",
+        mappedMinStockPrice=f"{mappedMinSP:.2f}",
+        mappedMaxStockPrice=f"{mappedMaxSP:.2f}",
         heatmapColors=f"{colorPalette}"
     )
 

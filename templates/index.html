@@ -3,75 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{url_for('static', filename='mystyle.css')}}">
-    <script src="{{url_for('static', filename='myscript.js')}}" defer></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
+    <script src="{{ url_for('static', filename='myscript.js') }}" defer></script>
     <title>Options Pricing</title>
 </head>
 <body>
     <div class="container">
         <div class="OptionsPricingCalc">
-            <form id="formSubmission" method="POST" action="/calc">
+            <!-- Form for Calculating Option Prices -->
+            <form id="calculateForm" method="POST" action="/calc">
                 <h1>Black-Scholes Option Pricing Model</h1>
                 <div class="ResultsDisplay">
                     <div class="result-card call">
                         <div class="result-label">CALL PRICE</div>
-                        <div class="result-value">{{call_price}}</div>
+                        <div class="result-value">{{ call_price }}</div>
                     </div>
                     <div class="result-card put">
                         <div class="result-label">PUT PRICE</div>
-                        <div class="result-value">{{put_price}}</div>
+                        <div class="result-value">{{ put_price }}</div>
                     </div>
                 </div>
                 <label for="stockPrice">Stock Price (S):</label>
-                <input type="number" id="stockPrice" name="stockPrice" value="{{stockPrice}}" step="0.01" placeholder="Enter Current Price">
-        
+                <input type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
+
                 <label for="strikePrice">Strike Price (X):</label>
-                <input type="number" id="strikePrice" name="strikePrice" value="{{strikePrice}}" step="0.01" placeholder="Enter Strike Price">
-        
+                <input type="number" id="strikePrice" name="strikePrice" value="{{ strikePrice }}" step="0.01" placeholder="Enter Strike Price">
+
                 <label for="RFIR">Risk-Free Interest Rate (r):</label>
-                <input type="number" id="RFIR" name="RFIR" value="{{RFIR}}" step="0.01" placeholder="Enter the Risk-Free Interest Rate">
-        
+                <input type="number" id="RFIR" name="RFIR" value="{{ RFIR }}" step="0.01" placeholder="Enter the Risk-Free Interest Rate">
+
                 <label for="expiration">Time to Expire in Years (T):</label>
-                <input type="number" id="expiration" name="expiration" value="{{expiration}}" step="0.01" placeholder="Enter the Expiration Time">
-        
+                <input type="number" id="expiration" name="expiration" value="{{ expiration }}" step="0.01" placeholder="Enter the Expiration Time">
+
                 <label for="volatility">Volatility (σ):</label>
-                <input type="number" id="volatility" name="volatility" value="{{volatility}}" step="0.01" placeholder="Enter Specified Volatility">
-        
+                <input type="number" id="volatility" name="volatility" value="{{ volatility }}" step="0.01" placeholder="Enter Specified Volatility">
+                
+                <button type="submit">CALCULATE</button>
+            </form>
+
+            <!-- Form for Generating Heatmaps -->
+            <form id="generateForm" method="POST" action="/generate">
                 <div class="Parameters">
                     <div class="SPParameters">
                         <div class="MinSpCont">
                             <label for="minStockPrice">Minimum Stock Price</label>
-                            <input type="number" id="minStockPrice" name="minStockPrice" value="{{minStockPrice}}" step="0.01">
+                            <input type="number" id="minStockPrice" name="mappedMinStockPrice" value="{{ minStockPrice }}" step="0.01">
                         </div>
                         <div class="MaxSpCont">
                             <label for="maxStockPrice">Maximum Stock Price</label>
-                            <input type="number" id="maxStockPrice" name="maxStockPrice" value="{{maxStockPrice}}" step="0.01">
+                            <input type="number" id="maxStockPrice" name="mappedMaxStockPrice" value="{{ maxStockPrice }}" step="0.01">
                         </div>
                     </div>
                     <div class="VolatilityParameters">
                         <div class="minVolCont">
                             <label for="minVolatility">Minimum Volatility</label>
-                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="{{minVolatility}}" step="0.01" value="{{mappedMinVolatility}}">
+                            <input id="minVolatility" name="minVolatility" type="range" min="0.01" max="{{ minVolatility }}" step="0.01" value="{{ mappedMinVolatility }}">
                             <p>
                                 <span>0.01</span>
-                                <span class="myNum1">{{mappedMinVolatility}}</span>
-                                <span>{{minVolatility}}</span>
+                                <span class="myNum1">{{ mappedMinVolatility }}</span>
+                                <span>{{ minVolatility }}</span>
                             </p>
                         </div>
                         <div class="maxVolCont">
                             <label for="maxVolatility">Maximum Volatility</label>
-                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="{{maxVolatility}}" step="0.01" value="{{mappedMaxVolatility}}">
+                            <input id="maxVolatility" name="maxVolatility" type="range" min="0.01" max="{{ maxVolatility }}" step="0.01" value="{{ mappedMaxVolatility }}">
                             <p>
-                                <span>{{minVolatility}}</span>
-                                <span class="myNum2">{{mappedMaxVolatility}}</span>
-                                <span>{{maxVolatility}}</span>
+                                <span>{{ minVolatility }}</span>
+                                <span class="myNum2">{{ mappedMaxVolatility }}</span>
+                                <span>{{ maxVolatility }}</span>
                             </p>
                         </div>
                     </div>                       
                 </div>
                 <div class="ColorParamters">
                     <label for="heatmapColors">Select Color Palette:</label>
-                    <select id="heatmapColors" name="heatmapColors" data-selected="{{heatmapColors}}">
+                    <select id="heatmapColors" name="heatmapColors" data-selected="{{ heatmapColors }}">
                         <option value="RdYlGn">Red/Yellow/Green</option>
                         <option value="rocket">Rocket</option>
                         <option value="mako">Mako</option>
@@ -79,9 +85,11 @@
                         <option value="viridis">Viridis</option>
                     </select>
                 </div> 
-                <button type="submit">CALCULATE & GENERATE</button>
+                <button type="submit">GENERATE</button>
             </form>
         </div>
+
+        <!-- Heatmap Section -->
         <div class="Heatmap">
             <div class="HeatmapGraphs">
                 <h1>Heatmaps</h1>
