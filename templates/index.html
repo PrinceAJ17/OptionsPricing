@@ -3,111 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='mystyle.css') }}">
-    <script src="{{ url_for('static', filename='myscript.js') }}" defer></script>
-    <title>Options Pricing</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='HomePage.css') }}">
+    <title>Options Pricing Models</title>
 </head>
 <body>
-    <div class="container">
-        <div class="OptionsPricingCalc">
-            <!-- Form for Calculating Option Prices -->
-            <form id="calculateForm" method="POST" action="/calc">
-                <h1>Black-Scholes Option Pricing Model</h1>
-                <div class="ResultsDisplay">
-                    <div class="result-card call">
-                        <div class="result-label">CALL PRICE</div>
-                        <div class="result-value">{{ call_price }}</div>
-                    </div>
-                    <div class="result-card put">
-                        <div class="result-label">PUT PRICE</div>
-                        <div class="result-value">{{ put_price }}</div>
-                    </div>
-                </div>
-                <label for="stockPrice">Stock Price (S):</label>
-                <input type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
-
-                <label for="strikePrice">Strike Price (X):</label>
-                <input type="number" id="strikePrice" name="strikePrice" value="{{ strikePrice }}" step="0.01" placeholder="Enter Strike Price">
-
-                <label for="RFIR">Risk-Free Interest Rate (r):</label>
-                <input type="number" id="RFIR" name="RFIR" value="{{ RFIR }}" step="0.01" placeholder="Enter the Risk-Free Interest Rate">
-
-                <label for="expiration">Time to Expire in Years (T):</label>
-                <input type="number" id="expiration" name="expiration" value="{{ expiration }}" step="0.01" placeholder="Enter the Expiration Time">
-
-                <label for="volatility">Volatility (σ):</label>
-                <input type="number" id="volatility" name="volatility" value="{{ volatility }}" step="0.01" placeholder="Enter Specified Volatility">
-                
-                <button type="submit">CALCULATE</button>
-            </form>
-
-            <!-- Form for Generating Heatmaps -->
-        </div>
-
-        <!-- Heatmap Section -->
-        <div class="Heatmap">
-            <form id="generateForm" method="POST" action="/generate">
-                <div class="HeatmapParameters">
-                    <h1>Heatmap Parameters</h1>
-                    <div class="Parameters">
-                        <div class="SPParameters">
-                            <div class="MinSpCont">
-                                <label for="minStockPrice">Minimum Stock Price</label>
-                                <input type="number" id="minStockPrice" name="mappedMinStockPrice" value="{{ mappedMinStockPrice }}" step="0.01">
-                            </div>
-                            <div class="MaxSpCont">
-                                <label for="maxStockPrice">Maximum Stock Price</label>
-                                <input type="number" id="maxStockPrice" name="mappedMaxStockPrice" value="{{ mappedMaxStockPrice }}" step="0.01">
-                            </div>
-                        </div>
-                        <div class="VolatilityParameters">
-                            <div class="minVolCont">
-                                <label for="minVolatility">Minimum Volatility</label>
-                                <input id="minVolatility" name="mappedMinVolatility" type="range" min="0.01" max="{{ minVolatility }}" step="0.01" value="{{ mappedMinVolatility }}">
-                                <p>
-                                    <span>0.01</span>
-                                    <span class="myNum1">{{ mappedMinVolatility }}</span>
-                                    <span>{{ minVolatility }}</span>
-                                </p>
-                            </div>
-                            <div class="maxVolCont">
-                                <label for="maxVolatility">Maximum Volatility</label>
-                                <input id="maxVolatility" name="mappedMaxVolatility" type="range" min="{{minVolatility}}" max="{{ maxVolatility }}" step="0.01" value="{{ mappedMaxVolatility }}">
-                                <p>
-                                    <span>{{ minVolatility }}</span>
-                                    <span class="myNum2">{{ mappedMaxVolatility }}</span>
-                                    <span>{{ maxVolatility }}</span>
-                                </p>
-                            </div>
-                        </div>                       
-                    </div>
-                    <div class="ColorParamters">
-                        <label for="heatmapColors">Select Color Palette:</label>
-                        <select id="heatmapColors" name="heatmapColors" data-selected="{{ heatmapColors }}">
-                            <option value="RdYlGn">Red/Yellow/Green</option>
-                            <option value="rocket">Rocket</option>
-                            <option value="mako">Mako</option>
-                            <option value="flare">Flare</option>
-                            <option value="viridis">Viridis</option>
-                        </select>
-                    </div> 
-                    <button type="submit">GENERATE</button>
-                </form>
-                </div>
-            <div class="HeatmapGraphs">
-                <h1>Heatmaps</h1>
-                <div class="Graphs">
-                    <div class="CallHeatmap">
-                        <h2>Call Prices Heatmap</h2>
-                        <img src="{{ url_for('static', filename='heatmaps/' + call_heatmap) }}" alt="Call Prices Heatmap">
-                    </div>
-                    <div class="PutHeatmap">
-                        <h2>Put Prices Heatmap</h2>
-                        <img src="{{ url_for('static', filename='heatmaps/' + put_heatmap) }}" alt="Put Prices Heatmap">
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="pricingModelButtons">
+        <button onclick="window.location.href='/BlackSL'">Black-Scholes Pricing Model</button>
+        <button>Monte Carlo Pricing Model</button>
     </div>
 </body>
 </html>

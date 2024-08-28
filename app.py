@@ -56,9 +56,12 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
     plt.savefig(heatmap_path)
     plt.close()
 
-
-@app.route("/", methods=["GET"])
+@app.route('/')
 def index():
+    return render_template('index.html')
+
+@app.route("/BlackSL", methods=["GET"])
+def BlackSL():
 
     S = 150.00
     X = 100.00
@@ -95,7 +98,7 @@ def index():
     generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap",colorPalette,"put_prices_heatmap.png")
 
     return render_template(
-        "index.html",
+        "BlackSL.html",
         call_heatmap='call_prices_heatmap.png',
         put_heatmap='put_prices_heatmap.png',
         call_price=f"${round(call_price, 2):.2f}",
@@ -116,7 +119,7 @@ def index():
         heatmapColors=f"{colorPalette}"
     )
 
-@app.route("/calc", methods=["POST"])
+@app.route("/BlackSL/calc", methods=["POST"])
 def calc():
     global S, X, r, T, sigma, call_price, put_price, maxSP, minSP, maxVol, minVol
 
@@ -142,7 +145,7 @@ def calc():
     mappedMaxVol = maxVol
 
     return render_template(
-        "index.html",
+        "BlackSL.html",
         call_heatmap='call_prices_heatmap.png',
         put_heatmap='put_prices_heatmap.png',
         call_price=f"${round(call_price, 2):.2f}",
@@ -163,7 +166,7 @@ def calc():
         heatmapColors=f"{colorPalette}"
     )
 
-@app.route("/generate", methods=["POST"])
+@app.route("/BlackSL/generate", methods=["POST"])
 def generate():
     global minSP, maxSP, minVol, maxVol, colorPalette
 
@@ -202,7 +205,7 @@ def generate():
     generateHeatMap(put_prices, stockRange, volRange, "Put Option Prices Heatmap", colorPalette, put_heatmap_filename)
 
     return render_template(
-        "index.html",
+        "BlackSL.html",
         call_heatmap='call_prices_heatmap.png',
         put_heatmap='put_prices_heatmap.png',
         call_price=f"${round(call_price, 2):.2f}",

@@ -5,6 +5,31 @@ input::-webkit-inner-spin-button {
     margin: 0;
 }
 
+/* Header styles */
+.header{
+    display: flex;
+    flex-direction: row;
+    background-color: #232531;
+    margin-bottom: 20px;
+    border-radius: 9px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
+}
+
+ul{
+    list-style-type: none;  
+    display: flex;  
+    gap: 20px;
+}
+
+a{
+    color: #eaeaea;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover{
+    color: #5758bb;
+}
 /* Global styles */
 body {
     display: flex;
@@ -14,7 +39,7 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #eaeaea; /* Light text for contrast */
     margin: 0;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
 }
 
 /* Header styles */
