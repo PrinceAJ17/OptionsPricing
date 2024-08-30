@@ -60,6 +60,10 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
 def index():
     return render_template('index.html')
 
+@app.route("/MonteC", methods=["GET"])
+def MonteC():
+    return render_template("MonteC.html")
+
 @app.route("/BlackSL", methods=["GET"])
 def BlackSL():
 
