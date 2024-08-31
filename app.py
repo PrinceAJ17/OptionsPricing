@@ -16,6 +16,43 @@ app.config['HEATMAP_FOLDER'] = 'static/heatmaps'
 os.makedirs(app.config['HEATMAP_FOLDER'], exist_ok=True)
 
 
+
+# 1. Set Up the Parameters
+S0 = 100  # Initial stock price
+K = 110  # Strike price
+T = 1  # Time to maturity in years
+r = 0.05  # Risk-free interest rate
+sigma = 0.2  # Volatility of the stock
+num_simulations = 10000  # Number of simulated paths
+num_steps = 252  # Number of time steps (daily steps for a year)
+
+# 2. Generate Asset Price Paths
+dt = T / num_steps  # Time step size
+discount_factor = np.exp(-r * T)  # Discount factor for present value calculation
+
+# Initialize an array to store simulated paths
+S = np.zeros((num_simulations, num_steps + 1))
+S[:, 0] = S0  # All simulations start at the initial stock price
+
+# Generate paths
+for t in range(1, num_steps + 1):
+    Z = np.random.standard_normal(num_simulations)  # Draw random numbers for Brownian motion
+    S[:, t] = S[:, t - 1] * np.exp((r - 0.5 * sigma ** 2) * dt + sigma * np.sqrt(dt) * Z)
+
+# 3. Calculate Payoffs
+# Calculate the payoff for a European call option
+payoffs = np.maximum(S[:, -1] - K, 0)
+
+# 4. Discount Payoffs
+# Calculate the discounted payoff
+discounted_payoffs = discount_factor * payoffs
+
+# 5. Estimate the Option Price
+# Calculate the option price as the average of the discounted payoffs
+option_price = np.mean(discounted_payoffs)
+
+print(f"The estimated price of the European call option is: {option_price:.2f}")
+
 # Default values
 S = 150.00
 X = 100.00
