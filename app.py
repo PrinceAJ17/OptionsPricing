@@ -15,43 +15,9 @@ app.config['HEATMAP_FOLDER'] = 'static/heatmaps'
 # Ensure the directory exists
 os.makedirs(app.config['HEATMAP_FOLDER'], exist_ok=True)
 
+app.config["MC_FOLDER"] = "static/GBMgraph"
+os.makedirs(app.config["MC_FOLDER"], exist_ok=True)
 
-
-# 1. Set Up the Parameters
-S0 = 100  # Initial stock price
-K = 110  # Strike price
-T = 1  # Time to maturity in years
-r = 0.05  # Risk-free interest rate
-sigma = 0.2  # Volatility of the stock
-num_simulations = 10000  # Number of simulated paths
-num_steps = 252  # Number of time steps (daily steps for a year)
-
-# 2. Generate Asset Price Paths
-dt = T / num_steps  # Time step size
-discount_factor = np.exp(-r * T)  # Discount factor for present value calculation
-
-# Initialize an array to store simulated paths
-S = np.zeros((num_simulations, num_steps + 1))
-S[:, 0] = S0  # All simulations start at the initial stock price
-
-# Generate paths
-for t in range(1, num_steps + 1):
-    Z = np.random.standard_normal(num_simulations)  # Draw random numbers for Brownian motion
-    S[:, t] = S[:, t - 1] * np.exp((r - 0.5 * sigma ** 2) * dt + sigma * np.sqrt(dt) * Z)
-
-# 3. Calculate Payoffs
-# Calculate the payoff for a European call option
-payoffs = np.maximum(S[:, -1] - K, 0)
-
-# 4. Discount Payoffs
-# Calculate the discounted payoff
-discounted_payoffs = discount_factor * payoffs
-
-# 5. Estimate the Option Price
-# Calculate the option price as the average of the discounted payoffs
-option_price = np.mean(discounted_payoffs)
-
-print(f"The estimated price of the European call option is: {option_price:.2f}")
 
 # Default values
 S = 150.00
@@ -65,13 +31,17 @@ minVol = 0.1
 maxVol = 0.3
 colorPalette = "RdYlGn"
 
-def call(S, X, T, r, sigma):
+M = 100
+n = 100
+mu = 0.1
+
+def callBL(S, X, T, r, sigma):
     d1 = (np.log(S/X)+(r+((sigma)**2)/2)*T)/(sigma*np.sqrt(T))
     d2 = d1 - (sigma*np.sqrt(T))
     C = S*norm.cdf(d1) - ((X*np.exp(-r*T))*norm.cdf(d2))
     return C
 
-def put(S, X, T, r, sigma):
+def putBL(S, X, T, r, sigma):
     d1 = (np.log(S/X)+(r+((sigma)**2)/2)*T)/(sigma*np.sqrt(T))
     d2 = d1 - (sigma*np.sqrt(T))
     P = ((X*np.exp(-r*T))*norm.cdf(-d2)) - (S*norm.cdf(-d1))
@@ -93,13 +63,89 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
     plt.savefig(heatmap_path)
     plt.close()
 
+def simulatePath(S, T, sigma, M, n, mu):
+    dt = T/n
+    random_changes = np.random.normal(0,np.sqrt(dt),size=(M,n)).T
+    St = np.exp(
+        (mu - (sigma**2/2))*dt 
+        + 
+        (sigma*random_changes)
+    )
+    #Adds a row of ones to the top of St
+    St = np.vstack([np.ones(M),St])
+    #This initializes S to the first row and computes the product of a every return of every interval starting from the initial
+    St = S*St.cumprod(axis=0)
+    return St
+
+def callMC(S, X, T, r, sigma, M, n, mu):
+    St = simulatePath(S, T, sigma, M, n, mu)
+    #This chooses the LAST row and the WHOLE column where the column would represent the path of the stock moving
+    final_prices = St[-1:]
+    call_payoffs = np.maximum(final_prices - X, 0)
+    call_discounted_payoffs = call_payoffs * np.exp(-r * T)
+    call_price = np.mean(call_discounted_payoffs)
+    return call_price
+
+def putMC(S, X, T, r, sigma, M, n, mu):
+    St = simulatePath(S, T, sigma, M, n, mu)
+    #This chooses the LAST row and the WHOLE column where the column would represent the path of the stock moving
+    final_prices = St[-1:]
+    put_payoffs = np.maximum(X - final_prices,0)
+    put_discounted_payoffs = put_payoffs * np.exp(-r * T)
+    put_price = np.mean(put_discounted_payoffs)
+    return put_price
+
+def generateGBM(S, T, sigma, M, n, mu):
+    St = simulatePath(S, T, sigma, M, n, mu)
+    #This chooses the LAST row and the WHOLE column where the column would represent the path of the stock moving
+
+    time = np.linspace(0,T,n+1)
+    tt =  np.full(shape=(M,n+1), fill_value=time).T
+
+    plt.plot(tt, St)
+    plt.xlabel("Years $(t)$")
+    plt.ylabel("Stock Price $(S_t)$")
+    plt.title(
+        "Realizations of Geometric Brownian Motion\n $dS_t = \mu S_t dt + \sigma S_t dW_t$\n $S_0 = {0}, \mu = {1}, \sigma = {2}$".format(S, mu, sigma)
+    )
+    plt.savefig(os.path.join(app.config['MC_FOLDER'], "gbm_graph"))
+    plt.close()
+
+
+
 @app.route('/')
 def index():
     return render_template('index.html')
 
-@app.route("/MonteC", methods=["GET"])
+@app.route("/MonteC", methods=["GET","POST"])
 def MonteC():
-    return render_template("MonteC.html")
+    if request.method == "GET":
+        S = 150.00
+        X = 100.00
+        r = 0.05
+        T = 1.00
+        sigma = 0.20
+        M = 100
+        n = 100
+        mu = 0.1
+
+        call_price = callMC(S, X, T, r, sigma, M, n, mu)
+        put_price = putMC(S, X, T, r, sigma, M, n, mu)
+
+        return render_template(
+        "MonteC.html",
+        call_price=f"${round(call_price, 2):.2f}",
+        put_price=f"${round(put_price, 2):.2f}",
+        stockPrice=f"{S:.2f}",
+        strikePrice=f"{X:.2f}",
+        RFIR=f"{r:.2f}",
+        expiration=f"{T:.2f}",
+        volatility=f"{sigma:.2f}",
+        drift=f"{mu:.2f}",
+        steps=f"{n:.2f}",
+        simulations=f"{M:.2f}"
+    )
+
 
 @app.route("/BlackSL", methods=["GET"])
 def BlackSL():
@@ -115,8 +161,8 @@ def BlackSL():
     maxVol = 0.3
     colorPalette = "RdYlGn"
     
-    call_price = call(S, X, T, r, sigma)
-    put_price = put(S, X, T, r, sigma)
+    call_price = callBL(S, X, T, r, sigma)
+    put_price = putBL(S, X, T, r, sigma)
 
     stockRange = np.round(np.linspace(minSP, maxSP, 10), 2)
     volRange = np.round(np.linspace(minVol, maxVol, 10), 2)
@@ -132,8 +178,8 @@ def BlackSL():
 
     for i, vol in enumerate(volRange):
         for j, stockPrice in enumerate(stockRange):
-            call_prices[i, j] = call(stockPrice, X, T, r, vol)
-            put_prices[i, j] = put(stockPrice, X, T, r, vol)
+            call_prices[i, j] = callBL(stockPrice, X, T, r, vol)
+            put_prices[i, j] = putBL(stockPrice, X, T, r, vol)
 
     generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap",colorPalette, "call_prices_heatmap.png")
     generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap",colorPalette,"put_prices_heatmap.png")
@@ -170,8 +216,8 @@ def calc():
     T = getFormValue(request.form, "expiration", T)
     sigma = getFormValue(request.form, "volatility", sigma)
 
-    call_price = call(S, X, T, r, sigma)
-    put_price = put(S, X, T, r, sigma)
+    call_price = callBL(S, X, T, r, sigma)
+    put_price = putBL(S, X, T, r, sigma)
 
     minSP = S * 0.8
     maxSP =  S * 1.2
@@ -211,8 +257,8 @@ def calc():
 def generate():
     global minSP, maxSP, minVol, maxVol, colorPalette
 
-    call_price = call(S, X, T, r, sigma)
-    put_price = put(S, X, T, r, sigma)
+    call_price = callBL(S, X, T, r, sigma)
+    put_price = putBL(S, X, T, r, sigma)
 
     minSP = S * 0.8
     maxSP =  S * 1.2
@@ -236,8 +282,8 @@ def generate():
 
     for i, vol in enumerate(volRange):
         for j, stockPrice in enumerate(stockRange):
-            call_prices[i, j] = call(stockPrice, X, T, r, vol)
-            put_prices[i, j] = put(stockPrice, X, T, r, vol)
+            call_prices[i, j] = callBL(stockPrice, X, T, r, vol)
+            put_prices[i, j] = putBL(stockPrice, X, T, r, vol)
 
     call_heatmap_filename = 'call_prices_heatmap.png'
     put_heatmap_filename = 'put_prices_heatmap.png'

@@ -14,6 +14,47 @@
             <li><a href="{{url_for('MonteC')}}">Monte Carlo</a></li>
         </ul>
     </div>
-    
+    <div class="container">
+        <div class="OptionsPricingCalc">
+            <!-- Form for Calculating Option Prices -->
+            <form id="calculateForm" method="POST" action="/MonteC">
+                <h1>Black-Scholes Option Pricing Model</h1>
+                <div class="ResultsDisplay">
+                    <div class="result-card call">
+                        <div class="result-label">CALL PRICE</div>
+                        <div class="result-value">{{ call_price }}</div>
+                    </div>
+                    <div class="result-card put">
+                        <div class="result-label">PUT PRICE</div>
+                        <div class="result-value">{{ put_price }}</div>
+                    </div>
+                </div>
+                <label for="stockPrice">Stock Price (S):</label>
+                <input type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
+
+                <label for="strikePrice">Strike Price (X):</label>
+                <input type="number" id="strikePrice" name="strikePrice" value="{{ strikePrice }}" step="0.01" placeholder="Enter Strike Price">
+
+                <label for="RFIR">Risk-Free Interest Rate (r):</label>
+                <input type="number" id="RFIR" name="RFIR" value="{{ RFIR }}" step="0.01" placeholder="Enter the Risk-Free Interest Rate">
+
+                <label for="expiration">Time to Expire in Years (T):</label>
+                <input type="number" id="expiration" name="expiration" value="{{ expiration }}" step="0.01" placeholder="Enter the Expiration Time">
+
+                <label for="volatility">Volatility (σ):</label>
+                <input type="number" id="volatility" name="volatility" value="{{ volatility }}" step="0.01" placeholder="Enter Specified Volatility">
+
+                <label for="drift">Drift Term (μ):</label>
+                <input type="number" id="drift" name="drift" value="{{ drift }}" step="0.01" placeholder="Enter a Specified Drift Term">
+                
+                <label for="steps">Number of Discrete Time Steps (n):</label>
+                <input type="number" id="steps" name="steps" value="{{ steps }}" step="0.01" placeholder="Enter specified Discrete Time Steps">
+
+                <label for="simulations">Number of simulations (M):</label>
+                <input type="number" id="simulations" name="simulations" value="{{ simulations }}" step="0.01" placeholder="Enter the number of Simulations">
+                
+                <button type="submit">CALCULATE</button>
+            </form>
+        </div>
 </body>
 </html>
