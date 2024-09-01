@@ -30,7 +30,6 @@ maxSP = 180
 minVol = 0.1
 maxVol = 0.3
 colorPalette = "RdYlGn"
-
 M = 100
 n = 100
 mu = 0.1
@@ -64,6 +63,8 @@ def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
     plt.close()
 
 def simulatePath(S, T, sigma, M, n, mu):
+    M = int(M)
+    n = int(n)
     dt = T/n
     random_changes = np.random.normal(0,np.sqrt(dt),size=(M,n)).T
     St = np.exp(
@@ -96,6 +97,8 @@ def putMC(S, X, T, r, sigma, M, n, mu):
     return put_price
 
 def generateGBM(S, T, sigma, M, n, mu):
+    M = int(M)
+    n = int(n)
     St = simulatePath(S, T, sigma, M, n, mu)
     time = np.linspace(0,T,n+1)
     tt =  np.full(shape=(M,n+1), fill_value=time).T
@@ -105,7 +108,7 @@ def generateGBM(S, T, sigma, M, n, mu):
     plt.xlabel("Years $(t)$")
     plt.ylabel("Stock Price $(S_t)$")
     plt.title(
-        "Realizations of Geometric Brownian Motion\n $dS_t = \mu S_t dt + \sigma S_t dW_t$\n $S_0 = {0}, \mu = {1}, \sigma = {2}$".format(S, mu, sigma)
+        "Realizations of Geometric Brownian Motion\n $dS_t = \mu S_t dt + \sigma S_t dW_t$\n $S = {0}, \mu = {1}, \sigma = {2}$".format(S, mu, sigma)
     )
     plt.savefig(os.path.join(app.config['MC_FOLDER'], "gbm_graph.png"))
     plt.close()
@@ -127,25 +130,9 @@ def MonteC():
     n = 100
     mu = 0.1
     if request.method == "GET":
-
         call_price = callMC(S, X, T, r, sigma, M, n, mu)
         put_price = putMC(S, X, T, r, sigma, M, n, mu)
         generateGBM(S, T, sigma, M, n, mu)
-
-        return render_template(
-        "MonteC.html",
-        gbm_graph= "gbm_graph.png",
-        call_price=f"${round(call_price, 2):.2f}",
-        put_price=f"${round(put_price, 2):.2f}",
-        stockPrice=f"{S:.2f}",
-        strikePrice=f"{X:.2f}",
-        RFIR=f"{r:.2f}",
-        expiration=f"{T:.2f}",
-        volatility=f"{sigma:.2f}",
-        drift=f"{mu:.2f}",
-        steps=f"{n:.2f}",
-        simulations=f"{M:.2f}"
-    )
     else:
         S = getFormValue(request.form, "stockPrice", S)
         X = getFormValue(request.form, "strikePrice", X)
@@ -153,14 +140,14 @@ def MonteC():
         T = getFormValue(request.form, "expiration", T)
         sigma = getFormValue(request.form, "volatility", sigma)
         mu = getFormValue(request.form,"drift",mu)
-        n = getFormValue(request.form,"steps",n)
-        M = getFormValue(request.form,"simulations",M)
+        n = request.form.get("steps",n)
+        M = request.form.get("simulations",M)
+
 
         call_price = callMC(S, X, T, r, sigma, M, n, mu)
         put_price = putMC(S, X, T, r, sigma, M, n, mu)
         generateGBM(S, T, sigma, M, n, mu)
-
-        return render_template(
+    return render_template(
         "MonteC.html",
         gbm_graph= "gbm_graph.png",
         call_price=f"${round(call_price, 2):.2f}",
@@ -171,8 +158,8 @@ def MonteC():
         expiration=f"{T:.2f}",
         volatility=f"{sigma:.2f}",
         drift=f"{mu:.2f}",
-        steps=f"{n:.2f}",
-        simulations=f"{M:.2f}"
+        steps=f"{n}",
+        simulations=f"{M}"
         )
 
 
