@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{{ url_for('static', filename='BlackSL.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='MonteC.css') }}">
     <title>Document</title>
 </head>
 <body>
@@ -55,6 +55,12 @@
                 
                 <button type="submit">CALCULATE</button>
             </form>
+        </div>    
+        <div class="GBMGraph">
+            <h1>Simulation of paths</h1>
+            <div class="GraphMC">
+                <img src="{{ url_for('static', filename='GBMgraph/' + gbm_graph) }}" alt="General Brownian Motion of asset prices">
+            </div>
         </div>
 </body>
 </html>

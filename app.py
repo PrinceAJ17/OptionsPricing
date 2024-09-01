@@ -97,18 +97,17 @@ def putMC(S, X, T, r, sigma, M, n, mu):
 
 def generateGBM(S, T, sigma, M, n, mu):
     St = simulatePath(S, T, sigma, M, n, mu)
-    #This chooses the LAST row and the WHOLE column where the column would represent the path of the stock moving
-
     time = np.linspace(0,T,n+1)
     tt =  np.full(shape=(M,n+1), fill_value=time).T
 
+    plt.figure(figsize=(8,6))
     plt.plot(tt, St)
     plt.xlabel("Years $(t)$")
     plt.ylabel("Stock Price $(S_t)$")
     plt.title(
         "Realizations of Geometric Brownian Motion\n $dS_t = \mu S_t dt + \sigma S_t dW_t$\n $S_0 = {0}, \mu = {1}, \sigma = {2}$".format(S, mu, sigma)
     )
-    plt.savefig(os.path.join(app.config['MC_FOLDER'], "gbm_graph"))
+    plt.savefig(os.path.join(app.config['MC_FOLDER'], "gbm_graph.png"))
     plt.close()
 
 
@@ -119,21 +118,23 @@ def index():
 
 @app.route("/MonteC", methods=["GET","POST"])
 def MonteC():
+    S = 150.00
+    X = 100.00
+    r = 0.05
+    T = 1.00
+    sigma = 0.20
+    M = 100
+    n = 100
+    mu = 0.1
     if request.method == "GET":
-        S = 150.00
-        X = 100.00
-        r = 0.05
-        T = 1.00
-        sigma = 0.20
-        M = 100
-        n = 100
-        mu = 0.1
 
         call_price = callMC(S, X, T, r, sigma, M, n, mu)
         put_price = putMC(S, X, T, r, sigma, M, n, mu)
+        generateGBM(S, T, sigma, M, n, mu)
 
         return render_template(
         "MonteC.html",
+        gbm_graph= "gbm_graph.png",
         call_price=f"${round(call_price, 2):.2f}",
         put_price=f"${round(put_price, 2):.2f}",
         stockPrice=f"{S:.2f}",
@@ -145,6 +146,35 @@ def MonteC():
         steps=f"{n:.2f}",
         simulations=f"{M:.2f}"
     )
+    else:
+        S = getFormValue(request.form, "stockPrice", S)
+        X = getFormValue(request.form, "strikePrice", X)
+        r = getFormValue(request.form, "RFIR", r)
+        T = getFormValue(request.form, "expiration", T)
+        sigma = getFormValue(request.form, "volatility", sigma)
+        mu = getFormValue(request.form,"drift",mu)
+        n = getFormValue(request.form,"steps",n)
+        M = getFormValue(request.form,"simulations",M)
+
+        call_price = callMC(S, X, T, r, sigma, M, n, mu)
+        put_price = putMC(S, X, T, r, sigma, M, n, mu)
+        generateGBM(S, T, sigma, M, n, mu)
+
+        return render_template(
+        "MonteC.html",
+        gbm_graph= "gbm_graph.png",
+        call_price=f"${round(call_price, 2):.2f}",
+        put_price=f"${round(put_price, 2):.2f}",
+        stockPrice=f"{S:.2f}",
+        strikePrice=f"{X:.2f}",
+        RFIR=f"{r:.2f}",
+        expiration=f"{T:.2f}",
+        volatility=f"{sigma:.2f}",
+        drift=f"{mu:.2f}",
+        steps=f"{n:.2f}",
+        simulations=f"{M:.2f}"
+        )
+
 
 
 @app.route("/BlackSL", methods=["GET"])
