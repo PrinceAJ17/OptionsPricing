@@ -114,7 +114,7 @@ input[type="number"]:focus, select:focus {
     padding: 20px;
     gap: 10px; /* Increased gap for better spacing */
     width: 300px;
-    height: fit-content;
+    height: auto;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Slightly darker shadow */
 }
 
@@ -252,4 +252,25 @@ input[type="number"]:focus, select:focus {
     align-items: flex-start;
     width: 100%;
 }
+
+.info {
+    background-color: #1A2D3A; /* Darker blue background */
+    background: linear-gradient(135deg, #1A2D3A, #1E4055); /* Gradient background */
+    color: #E2EAF2; /* Light text color */
+    padding: 15px 20px; /* Add padding for space inside the box */
+    margin: 20px 0; /* Margin to separate from surrounding elements */
+    border-radius: 8px; /* Rounded corners */
+    border: 1px solid #1E4055; /* Subtle border */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+    font-size: 16px; /* Increase font size */
+    line-height: 1.5; /* Increase line height for better readability */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Match font with the rest of the site */
+    position: relative; /* For positioning any icons */
+}
+
+.info p {
+    margin: 0;
+}
+
+
 

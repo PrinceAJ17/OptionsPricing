@@ -30,6 +30,11 @@
                         <div class="result-value">{{ put_price }}</div>
                     </div>
                 </div>
+                <div class="info">
+                    This model uses random sampling and a stochastic volatility model (General Brownian Motion) 
+                    to simulate the paths an asset's price might follow over time, allowing users to estimate the price 
+                    of options more dynamically compared to the deterministic Black-Scholes model.
+                </div>
                 <label for="stockPrice">Stock Price (S):</label>
                 <input class="dp" type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
 
@@ -49,16 +54,21 @@
                 <input class="dp" type="number" id="drift" name="drift" value="{{ drift }}" step="0.01" placeholder="Enter a Specified Drift Term">
                 
                 <label for="steps">Number of Discrete Time Steps (n):</label>
-                <input class="nodp" type="number" id="steps" name="steps" value="{{ steps }}" step="1" placeholder="Enter specified Discrete Time Steps">
+                <input class="nodp" type="number" id="steps" name="steps" value="{{ steps }}" step="1" max="1000" placeholder="Enter specified Discrete Time Steps">
 
                 <label for="simulations">Number of Simulations (M):</label>
-                <input class="nodp" type="number" id="simulations" name="simulations" step="1" value="{{ simulations }}" placeholder="Enter the number of Simulations">
+                <input class="nodp" type="number" id="simulations" name="simulations" step="1" value="{{ simulations }}" max="1000" placeholder="Enter the number of Simulations">
                 
                 <button type="submit">CALCULATE</button>
             </form>
         </div>    
         <div class="GBMGraph">
             <h1>Simulation of paths</h1>
+            <div class="info">
+                Note: We would assume that σ and μ remains constant while introducing a random variable
+                from a normal distribution with mean 0 to simulate randomness after the discretization
+                of the GBM.
+            </div>
             <div class="GraphMC">
                 <img src="{{ url_for('static', filename='GBMgraph/' + gbm_graph) }}" alt="General Brownian Motion of asset prices">
             </div>

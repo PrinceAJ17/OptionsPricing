@@ -30,6 +30,13 @@
                         <div class="result-value">{{ put_price }}</div>
                     </div>
                 </div>
+                <div class="info">
+                    <p>
+                        Input specific parameters to calculate the prices of options using the Black-Scholes
+                        pricing model. Once calculated, adjust the heatmap parameters to your liking and generate
+                        call and put heatmaps at different stock prices and volatilities.
+                    </p>
+                </div>
                 <label for="stockPrice">Stock Price (S):</label>
                 <input type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
 
@@ -97,6 +104,11 @@
                             <option value="viridis">Viridis</option>
                         </select>
                     </div> 
+                    <div class="info">
+                        Note: Graphs are set to the default values unless 
+                        regenerated using different parameters by pressing
+                        "Generate".
+                    </div>
                     <button type="submit">GENERATE</button>
                 </form>
                 </div>
