@@ -52,12 +52,12 @@ def getFormValue(form, nameOfInput, defaultValue):
     else:
         return defaultValue
 
-def generateHeatMap(prices, stockrange, volrange, title, colorpal, filename):
+def generateHeatMap(prices, stockrange, volrange, colorpal, filename):
     plt.figure(figsize=(10,8))
     sns.heatmap(prices, cmap=colorpal, annot=True, xticklabels=np.round(stockrange, 2), yticklabels=np.round(volrange, 2), fmt=".2f")
-    plt.title(title)
-    plt.xlabel("Stock Price")
-    plt.ylabel("Volatility")
+    plt.title("\n $S_{{min}} = {0}, S_{{max}} = {1}$ \n $\sigma_{{min}} = {2}, \sigma_{{max}} = {3}$".format(stockrange[0], stockrange[-1], volrange[0], volrange[-1]))
+    plt.xlabel("Stock Price $(S)$")
+    plt.ylabel("Volatility $(\sigma)$")
     heatmap_path = os.path.join(app.config['HEATMAP_FOLDER'], filename)
     plt.savefig(heatmap_path)
     plt.close()
@@ -198,8 +198,8 @@ def BlackSL():
             call_prices[i, j] = callBL(stockPrice, X, T, r, vol)
             put_prices[i, j] = putBL(stockPrice, X, T, r, vol)
 
-    generateHeatMap(call_prices, stockRange, volRange, "Call Prices Heatmap",colorPalette, "call_prices_heatmap.png")
-    generateHeatMap(put_prices, stockRange, volRange, "Put Prices Heatmap",colorPalette,"put_prices_heatmap.png")
+    generateHeatMap(call_prices, stockRange, volRange, colorPalette, "call_prices_heatmap.png")
+    generateHeatMap(put_prices, stockRange, volRange, colorPalette,"put_prices_heatmap.png")
 
     return render_template(
         "BlackSL.html",
@@ -305,8 +305,8 @@ def generate():
     call_heatmap_filename = 'call_prices_heatmap.png'
     put_heatmap_filename = 'put_prices_heatmap.png'
 
-    generateHeatMap(call_prices, stockRange, volRange, "Call Option Prices Heatmap", colorPalette, call_heatmap_filename)
-    generateHeatMap(put_prices, stockRange, volRange, "Put Option Prices Heatmap", colorPalette, put_heatmap_filename)
+    generateHeatMap(call_prices, stockRange, volRange, colorPalette, call_heatmap_filename)
+    generateHeatMap(put_prices, stockRange, volRange, colorPalette, put_heatmap_filename)
 
     return render_template(
         "BlackSL.html",

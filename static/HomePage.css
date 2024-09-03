@@ -10,6 +10,33 @@ body {
     padding: 20px;
 }
 
+li{
+    list-style-type:circle;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #eaeaea; /* Soft highlight color for the main title */
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+span {
+    color: #f7c08a; /* Replace with your desired color */
+    font-weight: bold; /* Optional: Make the text bold */
+}
+
+
 /* Updated button styles */
 button {
     padding: 12px 20px;
@@ -36,7 +63,6 @@ button:hover {
 
 /* Container and Header */
 .container {
-    max-width: 800px;
     width: 100%;
     background-color: #2d2d44; /* Slightly lighter dark background for contrast */
     padding: 40px;
@@ -44,22 +70,6 @@ button:hover {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
 }
 
-header {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
-h1 {
-    font-size: 2.5em;
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #f7c08a; /* Soft highlight color for the main title */
-}
-
-p {
-    font-size: 1.1em;
-    line-height: 1.6;
-}
 
 /* Models Section */
 .models {
@@ -79,7 +89,7 @@ p {
 }
 
 .model h2 {
-    color: #f7c08a; /* Soft highlight color for the main title */
+    color: #eaeaea; /* Soft highlight color for the main title */
     font-size: 1.8em;
     margin-top: 0;
     margin-bottom: 10px;
@@ -93,4 +103,5 @@ p {
 .model li {
     margin-bottom: 5px;
 }
+
 
