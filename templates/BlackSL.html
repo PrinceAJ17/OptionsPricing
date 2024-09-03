@@ -110,19 +110,16 @@
                         "Generate".
                     </div>
                     <button type="submit">GENERATE</button>
-                </form>
                 </div>
-            <div class="HeatmapGraphs">
-                <h1>Heatmaps</h1>
-                <div class="Graphs">
-                    <div class="CallHeatmap">
-                        <h2>Call Prices Heatmap</h2>
-                        <img src="{{ url_for('static', filename='heatmaps/' + call_heatmap) }}" alt="Call Prices Heatmap">
-                    </div>
-                    <div class="PutHeatmap">
-                        <h2>Put Prices Heatmap</h2>
-                        <img src="{{ url_for('static', filename='heatmaps/' + put_heatmap) }}" alt="Put Prices Heatmap">
-                    </div>
+            </form>
+            <div class="Graphs">
+                <div class="CallHeatmap">
+                    <h2>Call Prices Heatmap</h2>
+                    <img src="{{ url_for('static', filename='heatmaps/' + call_heatmap) }}" alt="Call Prices Heatmap">
+                </div>
+                <div class="PutHeatmap">
+                    <h2>Put Prices Heatmap</h2>
+                    <img src="{{ url_for('static', filename='heatmaps/' + put_heatmap) }}" alt="Put Prices Heatmap">
                 </div>
             </div>
         </div>
