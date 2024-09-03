@@ -183,7 +183,7 @@ input[type="number"]:focus, select:focus {
     background: linear-gradient(135deg, #1A2D3A, #1E4055); /* Gradient background */
     color: #E2EAF2; /* Light text color */
     padding: 15px 20px; /* Add padding for space inside the box */
-    margin: 20px 0; /* Margin to separate from surrounding elements */
+    margin-top: 0;
     border-radius: 8px; /* Rounded corners */
     border: 1px solid #1E4055; /* Subtle border */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */

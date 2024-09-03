@@ -1,7 +1,8 @@
 body {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
     background-color: #1a1a2e; /* Dark background */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: #eaeaea; /* Light text for contrast */
@@ -13,6 +14,7 @@ body {
 button {
     padding: 12px 20px;
     margin-top: 10px;
+    height: 100%;
     width: 100%;
     background: linear-gradient(145deg, #1f1f38,#40407a, #1f1f38); /* Gradient for button */
     color: #eaeaea; /* Light text on button */
@@ -32,11 +34,63 @@ button:hover {
     transform: translateY(-2px); /* Slight lift effect */
 }
 
-.pricingModelButtons {
+/* Container and Header */
+.container {
+    max-width: 800px;
+    width: 100%;
+    background-color: #2d2d44; /* Slightly lighter dark background for contrast */
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+}
+
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+h1 {
+    font-size: 2.5em;
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #f7c08a; /* Soft highlight color for the main title */
+}
+
+p {
+    font-size: 1.1em;
+    line-height: 1.6;
+}
+
+/* Models Section */
+.models {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.model {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    height: 100vh;
+    justify-content: space-between;
+    background-color: #252539; /* Background for model sections */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+.model h2 {
+    color: #f7c08a; /* Soft highlight color for the main title */
+    font-size: 1.8em;
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.model ul {
+    margin: 10px 0;
+    padding-left: 20px;
+}
+
+.model li {
+    margin-bottom: 5px;
+}
+

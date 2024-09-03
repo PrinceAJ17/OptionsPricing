@@ -7,22 +7,59 @@
     <title>Options Pricing Models</title>
 </head>
 <body>
-    <div class="content">
-        <h1>Welcome to Options Pricing Models</h1>
-        <p>
-            This website provides tools for calculating option prices using two popular models:
-            the Black-Scholes model and the Monte Carlo simulation. These models help investors
-            and traders estimate the fair value of options based on different market conditions
-            and assumptions.
-        </p>
-        <p>
-            Choose a model below to get started with pricing your options:
-        </p>
-    </div>
-    
-    <div class="pricingModelButtons">
-        <button onclick="window.location.href='/BlackSL'">Black-Scholes Pricing Model</button>
-        <button onclick="window.location.href='/MonteC'">Monte Carlo Pricing Simulation</button>
+    <div class="container">
+        <header>
+            <h1>Welcome to Options Pricing Models</h1>
+            <p>
+                This website provides tools for calculating option prices using two popular models:
+                the Black-Scholes model and the Monte Carlo simulation. These models help investors
+                and traders estimate the fair value of options based on different market conditions
+                and assumptions.
+            </p>
+            <p>
+                Choose a model below to get started with pricing your options:
+            </p>
+        </header>
+        <div class="models">
+            <div class="model">
+                <div class="content">
+                    <h2>Black-Scholes</h2>
+                    <p>The Black-Scholes model takes into account of 5 main parameters:</p>
+                    <ul>
+                        <li>Stock Price</li>
+                        <li>Strike Price</li>
+                        <li>Time to Expiry</li>
+                        <li>Volatility</li>
+                        <li>Risk-free Interest Rate</li>
+                    </ul>
+                    <p>This model uses a fairly simple mathematical and deterministic approach towards calculating
+                        the price of a call or put option while assuming constant volatility and lognormal asset prices.
+                    </p>
+                </div>
+                <div class="routingButton">
+                    <button onclick="window.location.href='/BlackSL'">Black-Scholes Pricing Model</button>
+                </div>
+            </div>
+            <div class="model">
+                <div class="content">
+                    <h2>Monte Carlo</h2>
+                    <p>Monte Carlo simulation takes into account the same 5 parameters as Black-Scholes
+                        and an additional 3 parameters.
+                    </p>
+                    <ul>
+                        <li>Drift Term</li>
+                        <li>Number of Steps</li>
+                        <li>Number of Simulation Paths</li>
+                    </ul>
+                    <p>This model is mathematically complex and computationally intensive as it simulates numerous possible paths
+                        the price of an asset may take to estimate the price of an option.
+                    </p>
+                </div>
+                <div class="routingButton">
+                    <button onclick="window.location.href='/MonteC'">Monte Carlo Pricing Simulation</button>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

@@ -30,11 +30,6 @@
                         <div class="result-value">{{ put_price }}</div>
                     </div>
                 </div>
-                <div class="info">
-                    This model uses random sampling and a stochastic volatility model (General Brownian Motion) 
-                    to simulate the paths an asset's price might follow over time, allowing users to estimate the price 
-                    of options more dynamically compared to the deterministic Black-Scholes model.
-                </div>
                 <label for="stockPrice">Stock Price (S):</label>
                 <input class="dp" type="number" id="stockPrice" name="stockPrice" value="{{ stockPrice }}" step="0.01" placeholder="Enter Current Price">
 
@@ -64,6 +59,11 @@
         </div>    
         <div class="GBMGraph">
             <h1>Simulation of paths</h1>
+            <div class="info">
+                This model uses random sampling and a stochastic volatility model (General Brownian Motion) 
+                to simulate the paths an asset's price might follow over time, allowing users to estimate the price 
+                of options more dynamically compared to the deterministic Black-Scholes model.
+            </div>
             <div class="info">
                 Note: We would assume that σ and μ remains constant while introducing a random variable
                 from a normal distribution with mean 0 to simulate randomness after the discretization
