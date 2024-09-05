@@ -9,8 +9,7 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
 ///INPUT TYPE PARAMETER///
-const calcOptions = document.getElementById("calculateForm");
-const inputs1 = calcOptions.querySelectorAll('input[type="number"]');
+const inputs1 = document.querySelectorAll('input[type="number"]');
 
 inputs1.forEach(element => {
     const defaultValue = element.defaultValue

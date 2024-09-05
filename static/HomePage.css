@@ -3,14 +3,14 @@ body {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #1a1a2e; /* Dark background */
+    background-color: #1a1a2e;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #eaeaea; /* Light text for contrast */
+    color: #eaeaea;
     margin: 0;
     padding: 20px;
 }
 
-li{
+li {
     list-style-type:circle;
 }
 
@@ -23,7 +23,7 @@ h1 {
     font-size: 2.5em;
     margin-top: 0;
     margin-bottom: 10px;
-    color: #eaeaea; /* Soft highlight color for the main title */
+    color: #eaeaea;
 }
 
 p {
@@ -32,46 +32,40 @@ p {
 }
 
 span {
-    color: #f7c08a; /* Replace with your desired color */
-    font-weight: bold; /* Optional: Make the text bold */
+    color: #f7c08a;
+    font-weight: bold;
 }
 
-
-/* Updated button styles */
 button {
     padding: 12px 20px;
     margin-top: 10px;
     height: 100%;
     width: 100%;
-    background: linear-gradient(145deg, #1f1f38,#40407a, #1f1f38); /* Gradient for button */
-    color: #eaeaea; /* Light text on button */
+    background: linear-gradient(145deg, #1f1f38,#40407a, #1f1f38);
+    color: #eaeaea;
     border: none;
     border-radius: 8px;
     cursor: pointer;
     font-size: 18px;
     font-weight: bold;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Button hover effect */
 button:hover {
-    background: linear-gradient(145deg,#1f1f38, #1f1f38); /* Reverse gradient on hover */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Enhanced shadow on hover */
-    transform: translateY(-2px); /* Slight lift effect */
+    background: linear-gradient(145deg,#1f1f38, #1f1f38);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    transform: translateY(-2px);
 }
 
-/* Container and Header */
 .container {
     width: 100%;
-    background-color: #2d2d44; /* Slightly lighter dark background for contrast */
+    background-color: #2d2d44;
     padding: 40px;
     border-radius: 12px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
-
-/* Models Section */
 .models {
     display: flex;
     flex-direction: row;
@@ -82,14 +76,14 @@ button:hover {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: #252539; /* Background for model sections */
+    background-color: #252539;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .model h2 {
-    color: #eaeaea; /* Soft highlight color for the main title */
+    color: #eaeaea;
     font-size: 1.8em;
     margin-top: 0;
     margin-bottom: 10px;
@@ -103,5 +97,3 @@ button:hover {
 .model li {
     margin-bottom: 5px;
 }
-
-
