@@ -9,3 +9,5 @@ These models help retail investors estimate a value for a call or put option bas
 
 ## Models
 1) Black-Scholes model
+```The Black-Scholes model
+   
