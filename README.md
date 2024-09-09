@@ -10,9 +10,9 @@ These models help retail investors estimate the value of a call or put option ba
 ---
 
 
-## Pricing Models
+# Pricing Models
 
-### 1. Black-Scholes Model
+## Black-Scholes Model
 
 The **Black-Scholes model** is a deterministic formula that calculates the price of options using a deterministic formula. It uses five main parameters:
 
@@ -40,7 +40,7 @@ $N(d_1)$ and $N(d_2)$ gives the probability that a standard normal variable will
 - If the option is a call then the right to buy an option would be at a lower price compared to market price (X << S)
 - If the option is a put then the right to sell the option would be at a higher price compared to market price (X >> S)
 
-# Monte Carlo Simulation for Option Pricing
+## Monte Carlo Simulation for Option Pricing
 
 The Monte Carlo simulation predicts an option’s price by simulating random price paths of the option. It takes into account the five existing variables from the Black-Scholes model, with the addition of three parameters:
 
@@ -50,7 +50,7 @@ The Monte Carlo simulation predicts an option’s price by simulating random pri
 | `n`    | The number of time steps at which the price of an asset is updated                                                     |
 | `M`    | The number of simulations                                                                                               |
 
-## Steps in the Monte Carlo Simulation
+### Steps in the Monte Carlo Simulation
 
 1. **Simulation of Price Paths Using Geometric Brownian Motion (GBM):**
 
