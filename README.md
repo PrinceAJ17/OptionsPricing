@@ -125,14 +125,29 @@ To use the **OptionsPricing** web application locally, follow the instructions b
 
 ---
 
-## Usage
+## Usage Guide
 
-1) Navigate to the home page and select either of the pricing models
-2) If you chose Black-Scholes, you have to input/modify parameters into the calculator to calculate call and put option prices. Once you press the "Calculate" button, this would give you the option prices and would automatically set the default parameters for the heatmap.  
-3) Note: This wouldn't affect the existing generated/default heatmap that is presented to you but rather only the default values of the parameters.
-4) To generate a heatmap you would need to explicitally press the "Generate" button after you have modified the heatmap parameters.
-5) If you chose Monte Carlo, you would still have the option to input the existing parameters from Black-Scholes with an additional few.
-6) Once you press "Calculate", you would be presented with both the option prices and the simulation
+1. **Navigate to the home page** and select either of the pricing models:
+   - **Black-Scholes**
+   - **Monte Carlo Simulation**
+
+2. **If you chose Black-Scholes**:
+   - Input or modify parameters in the calculator.
+   - Press the "Calculate" button to view the call and put option prices.
+   - This will also automatically update the default parameters for the heatmap.
+   
+   **Note**:
+   - Pressing "Calculate" does not affect the existing heatmap that is presented to you.
+   - It only changes the **default values** for the heatmap parameters.
+
+3. To **generate a new heatmap**, you need to explicitly press the "Generate" button after modifying the heatmap parameters.
+
+4. **If you chose Monte Carlo**:
+   - You can input the existing parameters from Black-Scholes, along with a few additional parameters.
+
+5. Once you press **"Calculate"**, you will be presented with:
+   - The **option prices** and
+   - The **Monte Carlo simulation** results.
 
 
 
