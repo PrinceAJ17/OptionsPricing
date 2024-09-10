@@ -144,10 +144,7 @@ To use the **OptionsPricing** web application locally, follow the instructions b
 
 4. **If you chose Monte Carlo**:
    - You can input the existing parameters from Black-Scholes, along with a few additional parameters.
-
-5. Once you press **"Calculate"**, you will be presented with:
-   - The **option prices** and
-   - The **Monte Carlo simulation** results.
+   - Once you press "Calculate", you will be presented with both the option prices and the simulated paths.
 
 
 
