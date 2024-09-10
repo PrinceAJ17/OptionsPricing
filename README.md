@@ -10,9 +10,9 @@ These models help retail investors estimate the value of a call or put option ba
 ---
 
 
-# Pricing Models
+## Pricing Models
 
-## Black-Scholes Model
+### 1. Black-Scholes Model
 
 The **Black-Scholes model** is a deterministic formula that calculates the price of options using a deterministic formula. It uses five main parameters:
 
@@ -40,58 +40,59 @@ $N(d_1)$ and $N(d_2)$ gives the probability that a standard normal variable will
 - If the option is a call then the right to buy an option would be at a lower price compared to market price (X << S)
 - If the option is a put then the right to sell the option would be at a higher price compared to market price (X >> S)
 
-## Monte Carlo Simulation for Option Pricing
+### 2. Monte Carlo Simulation
+The Monte Carlo simulation predicts an options price by simulating random price paths of an option. It takes into account of the 5 existing variables from the Black-Scholes model with an additional 3 parameters: 
 
-The Monte Carlo simulation predicts an option’s price by simulating random price paths of the option. It takes into account the five existing variables from the Black-Scholes model, with the addition of three parameters:
+| Symbol   | Description                                                                                                             |
+|----------|-------------------------------------------------------------------------------------------------------------------------|
+| `μ`      | The drift rate which would be the expected return of the asset or the avg. rate of growth of the asset's price over time (In risk neutral scenarios r = μ)|
+| `n`      | This would be the time steps at which the price of an asset would be updated                                 |
+| `M`      | Number of Simulations                                                                                                   |
 
-| Symbol | Description                                                                                                             |
-|--------|-------------------------------------------------------------------------------------------------------------------------|
-| `μ`    | The drift rate, representing the expected return of the asset or the average rate of growth of the asset's price over time (In risk-neutral scenarios, \( r = μ \)) |
-| `n`    | The number of time steps at which the price of an asset is updated                                                     |
-| `M`    | The number of simulations                                                                                               |
+The Monte Carlo Simulation follows these steps:
 
-### Steps in the Monte Carlo Simulation
+1) Simulation of price paths are generated using the Geometric Brownian Motion (GBM):
 
-1. **Simulation of Price Paths Using Geometric Brownian Motion (GBM):**
+   This describes the random movement of financial assets. It will assume that the percentage change in price follows a normal distribution and that the asset price follows a continuous-time stochastic process with constant drift and volatility. GBM is an example of a stochastic process where random variables are indexed over a period of time. The GBM formula is as follows:
 
-   GBM describes the random movement of financial assets, assuming that the percentage change in price follows a normal distribution and that the asset price follows a continuous-time stochastic process with constant drift and volatility. The GBM formula is:
-
-   $dS_t = μ S_t \, dt + σ S_t \, dW_t$
+   $dS_t = μ S_t dt + σ S_t dW_t$
 
    Where:
+
    - $S_t$ = asset price at the current time t
-   - $dt$= infinitesimal change in time
-   - $dW_t$ = infinitesimal random increment in the Wiener process (Brownian Motion), normally distributed with mean 0 and variance dt
+   - dt = Infinitesmal (to allow for a continuous process) changes in time
+   - $dW_t$ = An infinitesimal random increment in the Wiener process (Brownian Motion), normally distributed with mean 0 and variance dt
 
-2. **Discretizing GBM:**
-
+2) Discretizing GBM:
    The total time to expiration T is divided into small time intervals Δt. For each time step, the asset price is updated using the discretized version of the GBM:
 
-   $S_{t + Δt} = S_t \times \exp \left( \left( μ - \frac{σ^2}{2} \right) Δt + σ \sqrt{Δt} \times Z_t \right)$
+   $S_{t + \Delta t} = S_t \times \exp \left( \left( \mu - \frac{\sigma^2}{2} \right) \Delta t + \sigma \sqrt{\Delta t} \times Z_t \right)$
 
    Where:
-   - $μ - \frac{σ^2}{2}$ represents the drift of the stock price after accounting for volatility. Without this correction, the model would overestimate the growth rate of the stock price, especially under high volatility conditions.
-   - $Z_t$ is a random variable that follows a normal distribution with mean 0 and variance 1, introducing uncertainty into the model.
-   - $σ \sqrt{Δt}$ scales the random variable to volatility, keeping the variance of price changes proportional to the time interval.
 
-3. **Calculate the Option’s Payoff:**
+   - $\mu - \frac{\sigma^2}{2}$ represents the drift of the stock price after accounting for volatility. Without this correction, the model would overestimate the growth rate of the stock price, especially under high volatility conditions.
 
-   - **Call Option Payoff:** max($S_t$ - X, 0), where X  is the strike price. The profit earned is $S_t$ - X if $S_t$ > X ; otherwise, the payoff is 0.
-   - **Put Option Payoff:** max(X - $S_t$, 0)
+   - $Z_t$ would be the random variable introduced that follows a normal distribution with mean of 0 and variance of 1. This introduces the uncertainity in the model.
 
-4. **Calculate the Discounted Payoff:**
+   - $\sigma \sqrt{\Delta t}$ allows for the random variable to be scaled to the volatility and keeping the variance of change in price (increments) proportional to the time interval.
 
-   The value of money decreases over time due to market conditions or other factors. To account for this, use the risk-free interest rate to convert the payoff back to its present value:
+3) Calculate the options payoff:
 
-   $Disc. Payoff = Payoff \times \exp(-r \times T)$
+   - Call option payoff: max($S_t$ - X, 0) where X is the strike price so the profit earned will be $S_t$ - X if $S_t$ > X, if not then payoff is 0.
 
-5. **Estimate the Option Price:**
+   - Put option payoff: max(X - $S_t$, 0)
 
-   This involves averaging the discounted payoffs from all possible paths of the asset’s price:
+4) Calculate discounted payoff:
 
-   $OP = \frac{1}{N} \sum_{i=1}^{N} Payoff_i$
+   Value of money would decrease over time possibly due to market conditions or other factors so to account for this you use this risk-free interest rate to convert the payoff back to real time value.
 
+   $Disc. Payoff = Payoff \times exp( -r \times T)$
 
+5) Estimate the option price:
+
+   This involves averaging the discounted payoffs produced from all the possible paths of an asset's price.
+
+   $OP = \frac{1}{N} \sum_{i=1}^{N} \text{Payoff}_i$
 
 
 
