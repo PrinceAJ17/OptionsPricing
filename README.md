@@ -95,5 +95,34 @@ The Monte Carlo Simulation follows these steps:
    $OP = \frac{1}{N} \sum_{i=1}^{N} \text{Payoff}_i$
 
 
+---
+
+
+## Installation
+
+To use the **OptionsPricing** web application locally, follow the instructions below:
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/PrinceAJ17/OptionsPricing.git
+   cd OptionsPricing
+
+2. **Install the required dependencies:**
+
+   ```bash
+   pip install -r requirements.txt
+
+3. **Run the application:**
+
+   To start the web application, run the following command:
+
+   ```bash
+   python app.py
+   ```
+   Visit [`http://localhost:5000`](http://localhost:5000) in your browser to use the app.
+
+
+
 
 
