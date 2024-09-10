@@ -110,6 +110,7 @@ def generateGBM(S, T, sigma, M, n, mu):
     plt.title(
         "Realizations of Geometric Brownian Motion\n $dS_t = \mu S_t dt + \sigma S_t dW_t$\n $S = {0}, \mu = {1}, \sigma = {2}$".format(S, mu, sigma)
     )
+    plt.grid(True)
     plt.savefig(os.path.join(app.config['MC_FOLDER'], "gbm_graph.png"))
     plt.close()
 
