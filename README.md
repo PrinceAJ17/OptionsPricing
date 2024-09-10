@@ -72,7 +72,7 @@ The Monte Carlo simulation predicts an option’s price by simulating random pri
    Where:
    - $μ - \frac{σ^2}{2}$ represents the drift of the stock price after accounting for volatility. Without this correction, the model would overestimate the growth rate of the stock price, especially under high volatility conditions.
    - $Z_t$ is a random variable that follows a normal distribution with mean 0 and variance 1, introducing uncertainty into the model.
-   - $σ \sqrt{Δt}$scales the random variable to volatility, keeping the variance of price changes proportional to the time interval.
+   - $σ \sqrt{Δt}$ scales the random variable to volatility, keeping the variance of price changes proportional to the time interval.
 
 3. **Calculate the Option’s Payoff:**
 
