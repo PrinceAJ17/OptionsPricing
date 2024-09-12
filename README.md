@@ -135,14 +135,13 @@ To use the **OptionsPricing** web application locally, follow the instructions b
    - Input or modify parameters in the calculator.
    - Press the "Calculate" button to view the call and put option prices.
    - This will also automatically update the default parameters for the heatmap.
+   - To generate a new heatmap, you need to explicitly press the "Generate" button after modifying the heatmap parameters.
    
    **Note**:
    - Pressing "Calculate" does not affect the existing heatmap that is presented to you.
-   - It only changes the **default values** for the heatmap parameters.
+   - It only changes the default values for the heatmap parameters.
 
-3. To **generate a new heatmap**, you need to explicitly press the "Generate" button after modifying the heatmap parameters.
-
-4. **If you chose Monte Carlo**:
+3. **If you chose Monte Carlo**:
    - You can input the existing parameters from Black-Scholes, along with a few additional parameters.
    - Once you press "Calculate", you will be presented with both the option prices and the simulated paths.
 
